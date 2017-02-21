@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -17,7 +18,9 @@ int main(){
     ifstream inputfile ("params.in");
     ofstream outputfile;
     string line;
+
     outputfile.open("log.txt");
+
     while (getline(inputfile, line)) {
         // find position where equal to sign is
         int position = line.find('=');
@@ -25,6 +28,8 @@ int main(){
         string parameter_value = line.substr(position+1);
 
         outputfile << parameter_name << '=' << parameter_value << endl ;
+        float var = atof(parameter_value.c_str());
+        cout << var << endl;
         }
 
     // Closing files
