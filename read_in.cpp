@@ -1,4 +1,4 @@
-#include <isostream>
+#include <iostream>
 #include <fstream>
 #include <string>
 
@@ -11,22 +11,22 @@ int main() {
 
     //Check For Error
     if (inFile.fail()) {
-    cerr << "Error Opening File" << end1;
+    cerr << "Error Opening File" << endl;
     exit(1);
 
     }
 
-    int x, y:
+    int x, y;
 
     inFile >> x >> y;
 
-    cout << "Num 1: " << x << end1;
-    cont << "Num 2: " << y << end1;
+    cout << "Num 1: " << x << endl;
+    cout << "Num 2: " << y << endl;
 
     return 0;
 
 }
 
-    return 0;
 
-}
+
+
