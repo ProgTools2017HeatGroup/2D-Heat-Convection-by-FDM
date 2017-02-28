@@ -10,7 +10,7 @@ int main()
  
     //#define CLOCKS_PER_SEC ((clock_t)1000)
     double duration =(double)(end-start)/CLOCKS_PER_SEC;
-    printf("%f\n",duration); // 4.015s
+    cout << duration << endl; // 4.015s
  
     return 0;
 }
