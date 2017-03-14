@@ -1,16 +1,37 @@
-rho= 3.3e3
-v= 1e21
-k= 1e-6
-a= 3e-5
-P= 1e6 0 0 0 1e6
-   1e6 0 0 0 1e6
-   1e6 0 0 0 1e6
-T= 1.6e3 1.6e3 1.6e3 1.6e3 1.6e3
-   1.6e3 1.6e3 1.6e3 1.6e3 1.6e3
-   1.6e3 1.6e3 1.6e3 1.6e3 1.6e3
-Vx= 1e-3 1e-3 1e-3 1e-3 1e-3 1e-3
-    1e-3 1e-3 1e-3 1e-3 1e-3 1e-3
-    1e-3 1e-3 1e-3 1e-3 1e-3 1e-3
-Vy= 0 0 0 0 0
-    0 0 0 0 0
-    0 0 0 0 0
+density = 
+3.3e3
+
+viscosity = 
+1e21
+
+diffusivity = 
+1e-6
+
+expansion_coefficient = 
+3e-5
+
+X_extend =
+1e3
+
+Y_extend =
+1e3
+
+Pressure = 
+1e6 0 0 0 1e6
+1e6 0 0 0 1e6
+1e6 0 0 0 1e6
+
+Temperature = 
+1.6e3 1.6e3 1.6e3 1.6e3 1.6e3
+1.6e3 1.6e3 1.6e3 1.6e3 1.6e3
+1.6e3 1.6e3 1.6e3 1.6e3 1.6e3
+
+Velocity_X = 
+1e-3 1e-3 1e-3 1e-3 1e-3 1e-3
+1e-3 1e-3 1e-3 1e-3 1e-3 1e-3
+1e-3 1e-3 1e-3 1e-3 1e-3 1e-3
+
+Velocity_Y = 
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
