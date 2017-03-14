@@ -2,7 +2,9 @@ density =
 3.3e3
 
 viscosity = 
-1e21
+1e8
+
+
 
 diffusivity = 
 1e-6
