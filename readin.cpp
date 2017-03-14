@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
     string s,nam;
     int line_length = 100;
     string str[line_length];
-    float rho, v, k, a;
+    float rho, v, k, a, xe, ye;
     float P[3][5], T[3][5], Vx[3][5], Vy[3][5];
     int i;
         
@@ -56,6 +56,8 @@ int main(int argc, char* argv[])
         if(str[i] == "viscosity")               print_value(str,nam,i,v,logfile);
         if(str[i] == "diffusivity")             print_value(str,nam,i,k,logfile);
         if(str[i] == "expansion_coefficient")   print_value(str,nam,i,a,logfile);
+        if(str[i] == "X_extend")                print_value(str,nam,i,xe,logfile);
+        if(str[i] == "Y_extend")                print_value(str,nam,i,ye,logfile);
          	
         if(str[i] == "Pressure")                print_matrix(str,nam,i,P,logfile);
         if(str[i] == "Temperature")             print_matrix(str,nam,i,T,logfile);
