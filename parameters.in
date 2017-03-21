@@ -12,10 +12,10 @@ diffusivity =
 expansion_coefficient = 
 3e-5
 
-X_extend =
+x_extend =
 1e3
 
-Y_extend =
+y_extend =
 1e3
 
 Pressure = 

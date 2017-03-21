@@ -4,6 +4,16 @@
 #include <sstream>
 #include <stdlib.h>
 
+/** 
+ * @short readin function
+ * @file  readin.cpp
+ * @param density, viscosity, diffusivity, expansion_coefficient 
+ *
+ *
+ * This function will read in the parameters from input file and write these values to a log file, and 
+ * print them out to the screen in scientific form at the meantime. The usage is: ./readin parameters.in
+ */
+ 
 using namespace std;
 //  output values in scientific form
 using std::scientific;
@@ -11,8 +21,7 @@ using std::scientific;
 int print_value(string str[100],string nam,int i,float &value,ofstream &file);
 int print_matrix(string str[100],string nam,int i,float (&matrix)[3][5],ofstream &file);
 		
-//  purpose: read in the parameters from input file and write these values to a log file
-//  usage: ./readin parameters.in logfile 
+
 int main(int argc, char* argv[])
 {
     
@@ -56,8 +65,8 @@ int main(int argc, char* argv[])
         if(str[i] == "viscosity")               print_value(str,nam,i,v,logfile);
         if(str[i] == "diffusivity")             print_value(str,nam,i,k,logfile);
         if(str[i] == "expansion_coefficient")   print_value(str,nam,i,a,logfile);
-        if(str[i] == "X_extend")                print_value(str,nam,i,xe,logfile);
-        if(str[i] == "Y_extend")                print_value(str,nam,i,ye,logfile);
+        if(str[i] == "x_extend")                print_value(str,nam,i,xe,logfile);
+        if(str[i] == "y_extend")                print_value(str,nam,i,ye,logfile);
          	
         if(str[i] == "Pressure")                print_matrix(str,nam,i,P,logfile);
         if(str[i] == "Temperature")             print_matrix(str,nam,i,T,logfile);
