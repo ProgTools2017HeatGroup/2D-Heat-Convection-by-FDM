@@ -8,6 +8,11 @@
 #include <iostream>
 #include <math.h>
 
+/** 
+ * @short stability condition calculated function
+ * @file  stability_condition.cpp
+ */
+
 using namespace std;
 
 float mesh_scheme ;

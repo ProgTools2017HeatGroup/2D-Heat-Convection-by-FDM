@@ -7,6 +7,11 @@
 #include <iostream>
 #include <vector>
 
+/** 
+ * @short generate regular grid function
+ * @file  generate_regular_grid.cpp
+ */
+
 using namespace std;
 
  int points_in_x = 2;

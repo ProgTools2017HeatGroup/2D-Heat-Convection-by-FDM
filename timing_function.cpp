@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <time.h>
+
+/** 
+ * @short time consuming calculated function
+ * @file  timing_function.cpp
+ */
  
 int main()
 {
