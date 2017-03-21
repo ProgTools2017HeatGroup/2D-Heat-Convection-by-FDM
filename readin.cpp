@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
       
 //  open the log file, and wtite the input values in float format      
     ofstream logfile;
-    logfile.open("log");
+    logfile.open("log_input");
       
     i = 0;
     while(str[i] != "")
