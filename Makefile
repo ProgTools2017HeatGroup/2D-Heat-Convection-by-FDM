@@ -15,4 +15,4 @@ clean:
 	rm -rf *.o
 
 cleanall:
-	rm -rf main readin *.o log
+	rm -rf main readin *.o log_input

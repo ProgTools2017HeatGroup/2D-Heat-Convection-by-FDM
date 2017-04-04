@@ -32,29 +32,26 @@ bool check_input (string inputfilename)
 
 int main()
 {
-    clock_t start,end; 
+    clock_t start,end;
     start = clock();
-    
+
     cout << "*****************************************************" << endl;
     cout << "* This package is for 2D-heat-convection simulation *" << endl;
     cout << "*****************************************************" << endl;
-    
+
     if (!check_input("readin"))
     {
         cout << "please compile readin.cpp by g++ first" << endl;
         return 0;
     }
-        
-    else if (!check_input("log" ))
-    {	
-    	  cout << "Run ./readin inputfile ... to read the input" << endl;
+    else if (!check_input("log_input"))
+    {
+        cout << "Run ./readin inputfile ... to read the input" << endl;
         return 0;
     }
-    double TIME =(double)(end-start)/CLOCKS_PER_SEC;
-    
-    cout << TIME << endl; // 5.015s
-    
+
+    double TIME = (double)(end - start) / CLOCKS_PER_SEC;
+    cout << TIME << endl;// 5.015s
+
     return 0;
 }
-      
-

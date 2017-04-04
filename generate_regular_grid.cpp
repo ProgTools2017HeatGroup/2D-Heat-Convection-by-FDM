@@ -1,15 +1,10 @@
-/*
- * Generates regular rectangular grid points based on the user inputs
- * March, 2017
- *
- */
-
 #include <iostream>
 #include <vector>
-
-/** 
+/**
  * @short generate regular grid function
  * @file  generate_regular_grid.cpp
+ *
+ * This function aims to generates regular rectangular grid points based on the user inputs.
  */
 
 using namespace std;
@@ -21,20 +16,22 @@ using namespace std;
 vector<float> x_grid(points_in_x);
 vector<float> y_grid(points_in_y);
 
-main () {
-
+int main()
+{
     float dx = x_extent/points_in_x;
     float dy = y_extent/points_in_y;
 
     int x_o , y_o = 0;
 
-    for (int i=0; i < points_in_x; i ++) {
+    for (int i=0; i < points_in_x; i ++)
+    {
         x_grid[i] = x_o;
         cout << "Grid points along X: " << x_grid[i] << " " << endl;
         x_o += dx;
     }
 
-    for (int j=0; j < points_in_y; j++) {
+    for (int j=0; j < points_in_y; j++)
+    {
         y_grid[j] = y_o;
         cout << "Grid points along Y: " << y_grid[j] << " " << endl;
         y_o += dy;
