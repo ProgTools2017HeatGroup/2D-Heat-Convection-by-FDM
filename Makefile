@@ -9,6 +9,7 @@ main: main.o
 
 readin: readin.o
 	${CC} ${CFLAGS} readin.o -o readin
+	
 
 clean: 
 	rm -rf *.o
