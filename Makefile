@@ -10,8 +10,6 @@ main: main.o
 readin: readin.o
 	${CC} ${CFLAGS} readin.o -o readin
 	
-timing: timing.o
-        ${CC} ${CFLAGS} timing.o -o timing
 
 clean: 
 	rm -rf *.o
