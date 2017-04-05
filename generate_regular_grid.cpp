@@ -21,7 +21,7 @@ int main()
     float dx = x_extent/points_in_x;
     float dy = y_extent/points_in_y;
 
-    int x_o , y_o = 0;
+    int x_o, y_o = 0;
 
     for (int i=0; i < points_in_x; i ++)
     {
