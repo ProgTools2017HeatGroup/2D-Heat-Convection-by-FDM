@@ -1,18 +1,21 @@
 CC = g++
 
-CFLAGS = -Wall
+CPPFLAGS = -Wall
 
-all: main readin
+all: main
 
-main: main.o
-	${CC} ${CFLAGS} main.o -o main
+file_io.o: file_io.cpp
+	${CC} ${CPPFLAGS} -c file_io.cpp
+    
+main.o: main.cpp
+	${CC} ${CPPFLAGS} -c main.cpp
 
-readin: readin.o
-	${CC} ${CFLAGS} readin.o -o readin
-	
+main: main.o file_io.o
+	${CC} ${CPPFLAGS} main.o file_io.o -o main
+
 
 clean: 
 	rm -rf *.o
 
 cleanall:
-	rm -rf main readin *.o log_input
+	rm -rf main *.o 

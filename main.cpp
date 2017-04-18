@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#include "file_io.h"
+using namespace std;
 /**
  * @short Main program
  * @file  main.cpp
@@ -17,43 +19,26 @@
  * convection in a rectangular box.
  */
 
-using namespace std;
-
-bool check_input (string inputfilename)
-{
-    ifstream inputfile;
-    inputfile.open(inputfilename.c_str());
-
-    if (inputfile == NULL)
-    {
-        cout << inputfilename << "\t not found " << endl;
-        return false;
-    }
-    else  return true;
-}
-
-int main()
+int main(int argc, char* argv[])
 {
     clock_t start, end;
     start = clock();
 
-    cout << "*****************************************************" << endl;
-    cout << "* This package is for 2D-heat-convection simulation *" << endl;
-    cout << "*****************************************************" << endl;
+    float rho, vis, diff, expa, xe, ye;
+    int nx, ny; 
+    float **P, **T, **Vx, **Vy;
 
-    if ( not check_input("readin"))
-    {
-        cout << "please compile readin.cpp by g++ first" << endl;
-        return 0;
-    }
-    else if ( not check_input("log_input"))
-    {
-        cout << "Run ./readin inputfile ... to read the input" << endl;
-        return 0;
-    }
+    string str[100];
 
-    double TIME = (double)(end - start) / CLOCKS_PER_SEC;
-    cout << TIME << endl;// 5.015s
+    check_infile(argc);
+
+    read_infile(argc, argv, str);
+
+    store_params(str, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &P, &T, &Vx, &Vy);
+
+
+    float time = (float)(end - start) / CLOCKS_PER_SEC;
+    cout << time << endl;
 
     return 0;
 }
