@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include "file_io.h"
+#include "check_input.h"
 
 using namespace std;
 //  output values in scientific form
@@ -65,34 +66,42 @@ int store_params(string str[], float *rho, float *vis, float *diff, float *expa,
         if (str[i] == "density")
         {
             read_float(str, i, *rho);
+            check_input(str[i], *rho, 0);
         }
         if (str[i] == "viscosity")
         {
             read_float(str, i, *vis);
+            check_input(str[i], *vis, 0);
         }
         if (str[i] == "diffusivity")
         {
             read_float(str, i, *diff);
+            check_input(str[i], *diff, 0);
         }
         if (str[i] == "expansion_coefficient")
         {
             read_float(str, i, *expa);
+            check_input(str[i], *expa, 0);
         }
         if (str[i] == "x_extend")
         {
             read_float(str, i, *xe);
+            check_input(str[i], *xe, 0);
         }
         if (str[i] == "y_extend")
         {
             read_float(str, i, *ye);
+            check_input(str[i], *ye, 0);
         }
         if (str[i] == "nx")
         {
             read_int(str, i, *nx);
+            check_input(str[i], *nx, 0);
         }
         if (str[i] == "ny")
         {
             read_int(str, i, *ny);
+            check_input(str[i], *ny, 0);
         }
         if (str[i] == "Pressure")
         {
