@@ -1,41 +1,56 @@
+/*
+ * Generates regular rectangular grid points based on the user inputs
+ * March, 2017
+ *
+ */
+
 #include <iostream>
-#include <vector>
+#include <cstdlib>
+#include "generate_regular_grid.h"
+
 /**
  * @short generate regular grid function
  * @file  generate_regular_grid.cpp
- *
- * This function aims to generates regular rectangular grid points based on the user inputs.
  */
 
 using namespace std;
 
- int points_in_x = 2;
- int points_in_y = 4;
- int x_extent = 4;
- int y_extent = 12;
-vector<float> x_grid(points_in_x);
-vector<float> y_grid(points_in_y);
+// Get x values at the grid
+double** generate_x_points (double x_extent, double y_extent, int nx, int ny) {
 
-int main()
-{
-    float dx = x_extent/points_in_x;
-    float dy = y_extent/points_in_y;
+    double** x_grid = (double**) malloc(ny * sizeof(double*));
+    for (int ind = 0; ind < ny; ind++) {
+        x_grid[ind] = (double*) malloc (nx * sizeof (double));
+    }
 
-    int x_o, y_o = 0;
+    double dx = get_dx (x_extent, nx); // Get spacing between grid along x
 
-    for (int i=0; i < points_in_x; i ++)
-    {
-        x_grid[i] = x_o;
-        cout << "Grid points along X: " << x_grid[i] << " " << endl;
+    int x_o = 0;
+    for (int i=0; i < nx; i ++) {
+        for (int j=0; j < ny; j++) {
+            x_grid[j][i] = x_o;
+        }
         x_o += dx;
     }
+    return x_grid;
+}
 
-    for (int j=0; j < points_in_y; j++)
-    {
-        y_grid[j] = y_o;
-        cout << "Grid points along Y: " << y_grid[j] << " " << endl;
-        y_o += dy;
+//Get Y values at the grid
+double** generate_y_points (double x_extent, double y_extent, int nx, int ny) {
+
+    double** y_grid = (double**) malloc (ny * sizeof(double*));
+    for (int i = 0; i < ny; i++) {
+        y_grid[i] = (double*) malloc (nx * sizeof (double));
     }
 
-    return 0;
+    double dy = get_dy (y_extent, ny); // Get spacing between grid along y
+
+    int y_o = 0;
+    for (int i=0; i < ny; i ++) {
+        for (int j=0; j < nx; j++) {
+            y_grid[i][j] = y_o;
+        }
+        y_o += dy;
+    }
+    return y_grid;
 }
