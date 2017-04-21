@@ -4,9 +4,6 @@ CPPFLAGS = -Wall
 
 all: main
 
-check_input.o: check_input.cpp
-	${CC} ${CPPFLAGS} -c check_input.cpp
-
 file_io.o: file_io.cpp
 	${CC} ${CPPFLAGS} -c file_io.cpp
 
