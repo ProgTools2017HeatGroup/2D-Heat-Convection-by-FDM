@@ -7,7 +7,12 @@
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#include <unistd.h> 
+#include <cstring>
+#include <vector>
 #include "file_io.h"
+#include "utility.h"
+
 using namespace std;
 /**
  * @short Main program
@@ -21,26 +26,74 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    clock_t start, end;
-    start = clock();
+//    clock_t start, end;
+//    start = clock();
 
-    float rho, vis, diff, expa, xe, ye;
-    int nx, ny; 
+    float rho, vis, diff, expa;
+    int  xe, ye,nx, ny;
     float **P, **T, **Vx, **Vy;
+    vector<string> str;
 
-    string str[100];
+    int opt;
+    char *infile, *logfile;
 
-    check_infile(argc);
+    while ((opt = getopt(argc, argv, "i:o:hv")) != -1)
+        switch (opt)
+    {
+        case 'h':
+            cout << "usage: " << argv[0] << " [OPTIONS][-i] INPUTFILENAME;[-o] LOGFILENAME;[-h] HELP;[-v] VERSION" << endl;
+            break;
+        case 'v':
+            cout << argv[0] << ": Solve 2D-heat-convection using finite differences method --ver1.00" << endl;
+            break;
+        case 'i':
+            infile = optarg;
+//            cout << "Inputfile is " << infile << endl;
+//            if (strcmp(argv[optind+2], "-o") != 0)
+//            {
+//                cout << "Missing logfile option" << endl;
+//                exit(EXIT_FAILURE);
+//            }
+            break;
+        case 'o':
+            logfile = optarg;
+            cout << "Logfile is " << logfile << endl;
+            break;
+        case '?':
+            if (optopt == 'i')
+            {
+                cout << "Missing inputfile option" <<endl;
+                exit(EXIT_FAILURE);
+            }
+            else if (optopt == 'o')
+            {
+                cout << "Missing logfile option" << endl;
+                exit(EXIT_FAILURE);
+            }
+            else
+            {
+                cout << "Unknown option" << endl;
+                exit(EXIT_FAILURE);
+            }
+        default:
+            abort();
+    }
 
-    read_infile(argc, argv, str);
+
+//    check_infile(argc);
+
+    read_infile(infile, str);
 
     
     
     store_params(str, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &P, &T, &Vx, &Vy);
 
+    write_logfile(logfile, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &P, &T, &Vx, &Vy);
 
-    float time = (float)(end - start) / CLOCKS_PER_SEC;
-    cout << time << endl;
+
+
+//    float time = (float)(end - start) / CLOCKS_PER_SEC;
+//    cout << time << endl;
 
     return 0;
 }
