@@ -5,48 +5,30 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-#include "file_io.h"
+#include <vector>
+#include "utility.h"
 
 using namespace std;
 //  output values in scientific form
 using std::scientific;
 
-int check_infile(int argc)
-{
-    if (argc < 3)
-    {
-        cout << "Missing inputfile or logfile, please check\n";
-        return false;
-    }
-    else if (argc > 3)
-    {
-        cout << "Too many inputfiles, please check\n";
-        return false;
-    }
-    else
-    {
-         cout << "The program is initializing......\n" << endl;
-         return 0;
-    }
-}
-
-int read_infile(int argc, char* argv[], string str[])
+int read_infile(char* args, vector<string> &str)
 {
     int i = 0;
     string s;
     ifstream infile;
 
-    infile.open(argv[1]);
+    infile.open(args);
     if (!infile.is_open())
     {
         cout << "inputfile not found\n" << endl;
-        return false;
+        exit(EXIT_FAILURE);
     }
 
     // Read variables as strings from infile
     while (infile >> s)
     {
-        str[i] = s;
+        str.push_back(s);
         i++;
     }
 
@@ -55,24 +37,34 @@ int read_infile(int argc, char* argv[], string str[])
     return 0;
 }
 
-int store_params(string str[], float *rho, float *vis, float *diff, float *expa,
-    float *xe, float *ye, int *nx, int *ny, float ***P, float ***T, float ***Vx,
+int store_params(vector<string> &str, float *rho, float *vis, float *diff, float *expa,
+    int *xe, int *ye, int *nx, int *ny, float ***P, float ***T, float ***Vx,
     float ***Vy)
 {
-    int i = 0;
-    while (str[i] != "")
+    size_t i = 0;
+    while ( i<str.size() )
     {
         if (str[i] == "density")
         {
-            read_float(str, i, *rho);
+            if (read_float(str, i, *rho) || check_vari_float(*rho))
+            {
+                print_error();
+            }
         }
         if (str[i] == "viscosity")
         {
-            read_float(str, i, *vis);
+            if (read_float(str, i, *vis) || check_vari_float(*vis))
+            {
+                print_error();
+            }
+                
         }
         if (str[i] == "diffusivity")
         {
-            read_float(str, i, *diff);
+            if (read_float(str, i, *diff) || check_vari_float(*diff))
+            {
+                print_error();
+            }
         }
         if (str[i] == "expansion_coefficient")
         {
@@ -80,19 +72,31 @@ int store_params(string str[], float *rho, float *vis, float *diff, float *expa,
         }
         if (str[i] == "x_extend")
         {
-            read_float(str, i, *xe);
+            if (read_int(str, i, *xe) || check_vari_int(*xe))
+            {
+                print_error();
+            }
         }
         if (str[i] == "y_extend")
         {
-            read_float(str, i, *ye);
+            if (read_int(str, i, *ye) || check_vari_int(*ye))
+            {
+                print_error();
+            }
         }
         if (str[i] == "nx")
         {
-            read_int(str, i, *nx);
+            if (read_int(str, i, *nx) || check_vari_int(*nx))
+            {
+                print_error();
+            }
         }
         if (str[i] == "ny")
         {
-            read_int(str, i, *ny);
+            if (read_int(str, i, *ny) || check_vari_int(*ny))
+            {
+                print_error();
+            }
         }
         if (str[i] == "Pressure")
         {
@@ -119,68 +123,59 @@ int store_params(string str[], float *rho, float *vis, float *diff, float *expa,
     return 0;
 }
 
-
-int read_float(string str[], int i, float &float_value)
+int write_logfile(char* args, float *rho, float *vis, float *diff,
+    float *expa, int *xe, int *ye, int *nx, int *ny, float ***P, float ***T, float ***Vx,
+    float ***Vy)
 {
-
-    cout << str[i] << "\t=" << endl;
-
-    char* c;
-    c = const_cast<char*>(str[i + 2].c_str());
-    sscanf(c, "%e", &float_value);
-
-    cout << scientific << float_value << endl << "\n";
-
-    return 0;
-}
-
-int read_int(string str[], int i, int &int_value)
-{
-
-    cout << str[i] << "\t=" << endl;
-    char* c;
-    c = const_cast<char*>(str[i + 2].c_str());
-    sscanf(c, "%d", &int_value);
-    cout << scientific << int_value << endl << "\n";
-
-    return 0;
-}
-
-
-int read_matrix(string str[], int i, float ***matr, int *nx, int *ny)
-{
-
-    cout << str[i] << "\t=" << endl;
+    ofstream logfile;
+    logfile.open(args);
+    logfile << "density =\n" << scientific << *rho << endl;
+    logfile << "viscosity =\n" << scientific << *vis << endl;
+    logfile << "diffusivity=\n" << scientific << *diff << endl;
+    logfile << "expansion_coefficient=\n" << scientific << *expa << endl;
+    logfile << "x_extend = \n" << scientific << *xe << endl;
+    logfile << "y_extend =\n" << scientific << *ye << endl;
+    logfile << "nx =\n" << scientific << *nx << endl;
+    logfile << "ny =\n" << scientific << *ny << endl;
     int j, k;
-    char* c;
+    logfile << "Pressure =\n";
     for (j = 0; j < *nx; j = j + 1)
     {
         for (k = 0; k < *ny; k = k + 1)
         {
-            c = const_cast<char*>(str[i + 2].c_str());
-            sscanf(c, "%e", matr[j][k]);
-            cout << scientific << matr[j][k] << "\t";
-            i++;
+            logfile << scientific << (*P)[j][k] << "\t";
         }
-        cout << "\n";
+        logfile << "\n";
     }
-    cout << "\n";
-
-    return 0;
-}
-
-
-int allocate_matrix(float ***M, int nx, int ny)
-{
-    int i;
-    (*M) = (float**)malloc(sizeof(float*)*nx);
-    if (*M == NULL)
-        return 1;
-
-    for (i = 0; i<nx; i++) {
-        (*M)[i] = (float*)malloc(sizeof(float)*ny);
-        if ((*M)[i] == NULL)
-            return 1;
+    logfile << "Temperature =\n";
+    for (j = 0; j < *nx; j = j + 1)
+    {
+        for (k = 0; k < *ny; k = k + 1)
+        {
+            logfile << scientific << (*T)[j][k] << "\t";
+        }
+        logfile << "\n";
     }
+    logfile << "Velocity_X =\n";
+    for (j = 0; j < *nx; j = j + 1)
+    {
+        for (k = 0; k < *ny; k = k + 1)
+        {
+            logfile << scientific << (*Vx)[j][k] << "\t";
+        }
+        logfile << "\n";
+    }
+    logfile << "Velocity_Y =\n";
+    for (j = 0; j < *nx; j = j + 1)
+    {
+        for (k = 0; k < *ny; k = k + 1)
+        {
+            logfile << scientific << (*Vy)[j][k] << "\t";
+        }
+        logfile << "\n";
+    }
+
+    logfile.close();
+
     return 0;
 }
