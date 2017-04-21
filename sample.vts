@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<VTKFile type="StructuredGrid" version="1.0" byte_order="LittleEndian">
+<StructuredGrid WholeExtent="0 2 0 2 0 0">
+<Piece Extent="0 2 0 2 0 0">
+<CellData></CellData>
+<Points>
+<DataArray type="Float64" NumberOfComponents="3" format="ascii">
+0 0 0
+1 0 0
+2 0 0
+0 1 0
+1 1 0
+2 1 0
+0 2 0
+1 2 0
+2 2 0
+</DataArray>
+</Points>
+<PointData Vectors="VelocityField">
+<DataArray type="Float64" Name="VelocityField" format="ascii" NumberOfComponents="3">
+1.01 -0.34 0
+1.00 -0.27 0
+0.97 -0.20 0
+0.93 -0.12 0
+0.89 -0.030 0
+0.85 0.06 0
+0.80 0.17 0
+0.75 0.29 0
+0.69 0.41 0
+</DataArray>
+<DataArray type="Float64" Name="Temperature" format="ascii" NumberOfComponents="1">
+1.07
+1.03
+0.99
+0.94
+0.89
+0.85
+0.82
+0.80
+0.81
+</DataArray>
+</PointData>
+</Piece>
+</StructuredGrid>
+</VTKFile>
