@@ -18,7 +18,7 @@ int read_double(vector<string> &str, int i, double &double_value)
 
     char* c;
     c = const_cast<char*>(str[i + 2].c_str());
-    sscanf(c, "%lf", &double_value);
+    sscanf(c, "%f lf", &double_value);
 
     cout << scientific << double_value << endl << "\n";
 
@@ -29,6 +29,7 @@ int read_int(vector<string> &str, int i, int &int_value)
 {
 
     cout << str[i] << "\t=" << endl;
+  
     char* c;
     c = const_cast<char*>(str[i + 2].c_str());
     sscanf(c, "%d", &int_value);
@@ -59,7 +60,7 @@ int read_matrix(vector<string> &str, int i, double ***matr, int *nx, int *ny)
         for (k = 0; k < *ny; k = k + 1)
         {
             c = const_cast<char*>(str[i + 2].c_str());
-            sscanf(c, "%lf", &(*matr)[j][k]);
+            sscanf(c, "f %lf", &(*matr)[j][k]);
             cout << scientific << (*matr)[j][k] << "\t";
             i++;
         }

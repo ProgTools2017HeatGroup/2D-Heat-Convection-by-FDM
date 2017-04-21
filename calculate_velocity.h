@@ -68,7 +68,7 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
 	// Global index for current node
 	        int k = (j*ny) + i;
 	        if (j == 0 ) {
-                if (left_condition == "FREE_SLIP") {
+                if (left_condition != "FREE_SLIP") {
                     gsl_matrix_set (A, k, k, 1);
                     gsl_vector_set (x, k, 0);
                 }
@@ -78,7 +78,7 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
                 }
             }
             else if (j == nx - 1 ) {
-                if (right_condition == "FREE_SLIP") {
+                if (right_condition != "FREE_SLIP") {
                     gsl_matrix_set (A, k, k, 1);
                     gsl_vector_set (x, k, 0);
                 }
@@ -89,7 +89,7 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
             }
 
              else if (i == 0 && j > 0 && j < nx - 1) {
-                if (top_condition == "FREE_SLIP") {
+                if (top_condition != "FREE_SLIP") {
                     gsl_matrix_set (A, k, k, 1);
                     gsl_vector_set (x, k, 0);
                 }
@@ -100,7 +100,7 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
             }
 
              else if (i == ny - 1 && j > 0 && j < nx - 1) {
-                if (bottom_condition == "FREE_SLIP") {
+                if (bottom_condition != "FREE_SLIP") {
                     gsl_matrix_set (A, k, k, 1);
                     gsl_vector_set (x, k, 0);
                 }

@@ -26,4 +26,6 @@ int write_logfile(char* args, double *rho, double *vis, double *diff, double *ex
     double *velo_right, double *velo_bottom, double *velo_top, double *Temp, double *total_time,
     double *output_fre, string *simul_type);
 
+
+
 #endif
