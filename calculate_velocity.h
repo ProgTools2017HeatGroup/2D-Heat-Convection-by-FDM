@@ -77,7 +77,7 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
                     gsl_vector_set (x, k, -left_velocity*dx);
                 }
             }
-            if (j == nx - 1) {
+            else if (j == nx - 1 ) {
                 if (right_condition == "FREE_SLIP") {
                     gsl_matrix_set (A, k, k, 1);
                     gsl_vector_set (x, k, 0);
@@ -88,7 +88,7 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
                 }
             }
 
-             if (i == 0) {
+             else if (i == 0 && j > 0 && j < nx - 1) {
                 if (top_condition == "FREE_SLIP") {
                     gsl_matrix_set (A, k, k, 1);
                     gsl_vector_set (x, k, 0);
@@ -99,7 +99,7 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
                 }
             }
 
-             if (i == ny - 1) {
+             else if (i == ny - 1 && j > 0 && j < nx - 1) {
                 if (bottom_condition == "FREE_SLIP") {
                     gsl_matrix_set (A, k, k, 1);
                     gsl_vector_set (x, k, 0);
