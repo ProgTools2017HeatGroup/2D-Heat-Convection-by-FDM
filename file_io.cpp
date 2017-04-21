@@ -37,23 +37,23 @@ int read_infile(char* args, vector<string> &str)
     return 0;
 }
 
-int store_params(vector<string> &str, float *rho, float *vis, float *diff, float *expa,
-    int *xe, int *ye, int *nx, int *ny, float ***P, float ***T, float ***Vx,
-    float ***Vy)
+int store_params(vector<string> &str, double *rho, double *vis, double *diff, double *expa,
+    int *xe, int *ye, int *nx, int *ny, double ***T, double ***Vx,
+    double ***Vy)
 {
     size_t i = 0;
     while ( i<str.size() )
     {
         if (str[i] == "density")
         {
-            if (read_float(str, i, *rho) || check_vari_float(*rho,0))
+            if (read_double(str, i, *rho) || check_vari_double(*rho,0))
             {
                 print_error();
             }
         }
         if (str[i] == "viscosity")
         {
-            if (read_float(str, i, *vis) || check_vari_float(*vis,0))
+            if (read_double(str, i, *vis) || check_vari_double(*vis,0))
             {
                 print_error();
             }
@@ -61,14 +61,14 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
         }
         if (str[i] == "diffusivity")
         {
-            if (read_float(str, i, *diff) || check_vari_float(*diff,0))
+            if (read_double(str, i, *diff) || check_vari_double(*diff,0))
             {
                 print_error();
             }
         }
         if (str[i] == "expansion_coefficient")
         {
-            read_float(str, i, *expa);
+            read_double(str, i, *expa);
         }
         if (str[i] == "x_extend")
         {
@@ -118,9 +118,9 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
     return 0;
 }
 
-int write_logfile(char* args, float *rho, float *vis, float *diff,
-    float *expa, int *xe, int *ye, int *nx, int *ny, float ***P, float ***T, float ***Vx,
-    float ***Vy)
+int write_logfile(char* args, double *rho, double *vis, double *diff,
+    double *expa, int *xe, int *ye, int *nx, int *ny, double ***P, double ***T, double ***Vx,
+    double ***Vy)
 {
     ofstream logfile;
     logfile.open(args);

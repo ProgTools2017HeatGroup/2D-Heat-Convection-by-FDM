@@ -10,6 +10,8 @@
 #include <unistd.h> 
 #include <cstring>
 #include <vector>
+
+#include "generate_regular_grid.h"
 #include "file_io.h"
 #include "utility.h"
 
@@ -29,9 +31,9 @@ int main(int argc, char* argv[])
 //    clock_t start, end;
 //    start = clock();
 
-    float rho, vis, diff, expa;
+    double rho, vis, diff, expa;
     int  xe, ye,nx, ny;
-    float **P, **T, **Vx, **Vy;
+    double **T, **Vx, **Vy;
     vector<string> str;
 
     int opt;
@@ -79,20 +81,18 @@ int main(int argc, char* argv[])
             abort();
     }
 
-
 //    check_infile(argc);
 
     read_infile(infile, str);
-
     
-    
-    store_params(str, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &P, &T, &Vx, &Vy);
+    store_params(str, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &T, &Vx, &Vy);
 
-    write_logfile(logfile, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &P, &T, &Vx, &Vy);
+    write_logfile(logfile, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &T, &Vx, &Vy);
 
+    double** generate_x_points (int xe, int ye, int nx, int ny);
+    double** generate_y_points (int xe, int ye, int nx, int ny);
 
-
-//    float time = (float)(end - start) / CLOCKS_PER_SEC;
+//    double time = (double)(end - start) / CLOCKS_PER_SEC;
 //    cout << time << endl;
 
     return 0;
