@@ -8,12 +8,11 @@ void set_horizontal_velocity (gsl_matrix* rho, int nx, int ny, double eta, doubl
                 double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* horizontal_velocity) {
 
     gsl_vector *x = gsl_vector_alloc (ny*nx);
-    void set_omega (gsl_matrix* rho, gsl_vector* x, int nx, int ny, double eta, double dx, double dy);
+    set_omega (rho, gx, nx, ny, eta, dx, dy);
 
     gsl_matrix* psi = gsl_matrix_alloc (ny, nx);
-    void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double dy, string left_condition,
-                string right_condition, string top_condition, string bottom_condition, double left_velocity,
-                double right_velocity, double top_velocity, double bottom_velocity);
+    set_psi (psi, x, nx, ny, dx, dy, left_condition, right_condition, top_condition,
+            bottom_condition, left_velocity, right_velocity, top_velocity, bottom_velocity);
 
     for (int i = 1; i < ny - 1; i++) {
 	    for (int j = 1; j < nx - 1; j++) {
@@ -30,12 +29,11 @@ void set_vertical_velocity (gsl_matrix* rho, int nx, int ny, double eta, double 
                 double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* vertical_velocity) {
 
     gsl_vector *x = gsl_vector_alloc (ny*nx);
-    void set_omega (gsl_matrix* rho, gsl_vector* x, int nx, int ny, double eta, double dx, double dy);
+    set_omega (rho,  x, nx, ny, eta, dx, dy);
 
     gsl_matrix* psi = gsl_matrix_alloc (ny, nx);
-    void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double dy, string left_condition,
-                string right_condition, string top_condition, string bottom_condition, double left_velocity,
-                double right_velocity, double top_velocity, double bottom_velocity);
+    set_psi (psi, x, nx, ny, dx, dy, left_condition, right_condition, top_condition, bottom_condition, 
+            left_velocity, right_velocity, top_velocity, bottom_velocity);
 
     for (int i = 1; i < ny - 1; i++) {
 	    for (int j = 1; j < nx - 1; j++) {
@@ -46,4 +44,3 @@ void set_vertical_velocity (gsl_matrix* rho, int nx, int ny, double eta, double 
     gsl_vector_free (x);
     gsl_matrix_free (psi);
 }
-
