@@ -85,7 +85,6 @@ int main(int argc, char* argv[])
 
     read_infile(infile, str);
     
-    store_params(str, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &T, &Vx, &Vy);
 
     write_logfile(logfile, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &T, &Vx, &Vy);
 
