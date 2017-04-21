@@ -89,8 +89,8 @@ int main(int argc, char* argv[])
 
     write_logfile(logfile, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &T, &Vx, &Vy);
 
-    double** generate_x_points (int xe, int ye, int nx, int ny);
-    double** generate_y_points (int xe, int ye, int nx, int ny);
+    int** X = generate_x_points (xe, ye, nx, ny);
+    int** Y = generate_y_points (xe, ye, nx, ny);
 
 //    double time = (double)(end - start) / CLOCKS_PER_SEC;
 //    cout << time << endl;
