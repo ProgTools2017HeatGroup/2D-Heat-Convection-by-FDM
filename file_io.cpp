@@ -46,14 +46,14 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
     {
         if (str[i] == "density")
         {
-            if (read_float(str, i, *rho) || check_vari_float(*rho))
+            if (read_float(str, i, *rho) || check_vari_float(*rho,0))
             {
                 print_error();
             }
         }
         if (str[i] == "viscosity")
         {
-            if (read_float(str, i, *vis) || check_vari_float(*vis))
+            if (read_float(str, i, *vis) || check_vari_float(*vis,0))
             {
                 print_error();
             }
@@ -61,7 +61,7 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
         }
         if (str[i] == "diffusivity")
         {
-            if (read_float(str, i, *diff) || check_vari_float(*diff))
+            if (read_float(str, i, *diff) || check_vari_float(*diff,0))
             {
                 print_error();
             }
@@ -72,36 +72,31 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
         }
         if (str[i] == "x_extend")
         {
-            if (read_int(str, i, *xe) || check_vari_int(*xe))
+            if (read_int(str, i, *xe) || check_vari_int(*xe,0))
             {
                 print_error();
             }
         }
         if (str[i] == "y_extend")
         {
-            if (read_int(str, i, *ye) || check_vari_int(*ye))
+            if (read_int(str, i, *ye) || check_vari_int(*ye,0))
             {
                 print_error();
             }
         }
         if (str[i] == "nx")
         {
-            if (read_int(str, i, *nx) || check_vari_int(*nx))
+            if (read_int(str, i, *nx) || check_vari_int(*nx,0))
             {
                 print_error();
             }
         }
         if (str[i] == "ny")
         {
-            if (read_int(str, i, *ny) || check_vari_int(*ny))
+            if (read_int(str, i, *ny) || check_vari_int(*ny,0))
             {
                 print_error();
             }
-        }
-        if (str[i] == "Pressure")
-        {
-            allocate_matrix(P, *nx, *ny);
-            read_matrix(str, i, P, nx, ny);
         }
         if (str[i] == "Temperature")
         {
@@ -138,15 +133,6 @@ int write_logfile(char* args, float *rho, float *vis, float *diff,
     logfile << "nx =\n" << scientific << *nx << endl;
     logfile << "ny =\n" << scientific << *ny << endl;
     int j, k;
-    logfile << "Pressure =\n";
-    for (j = 0; j < *nx; j = j + 1)
-    {
-        for (k = 0; k < *ny; k = k + 1)
-        {
-            logfile << scientific << (*P)[j][k] << "\t";
-        }
-        logfile << "\n";
-    }
     logfile << "Temperature =\n";
     for (j = 0; j < *nx; j = j + 1)
     {
