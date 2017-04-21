@@ -16,7 +16,6 @@
 #include "file_io.h"
 #include "utility.h"
 #include "set_density.h"
-#include "calculate_velocity.h"
 #include "calculate_temperature.h"
 
 using namespace std;
