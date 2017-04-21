@@ -23,7 +23,7 @@ void set_back_value (gsl_matrix* field_in, int ny_in, int nx_in, double back) {
 * variables corresponds to their geometries.
 */
 void set_box (gsl_matrix* field_in, double dx, double dy, double length, double height,
-              double coord_x, double coord_y, double perturb) {
+              double coord_x, double coord_y, double perturb, double x_extent, double y_extent) {
     assert(length >= 0 && height >= 0 && coord_x >= 0 && coord_y >=0 && perturb >=0);
     assert((length+coord_x)/2  < x_extent/2 && (height+coord_y)/2 < y_extent/2);
     for (int i = 0; i <= round(length/dx); i++) {
@@ -33,7 +33,7 @@ void set_box (gsl_matrix* field_in, double dx, double dy, double length, double 
     }
 }
 void set_disk (gsl_matrix* field_in, double dx, double dy, double radius, double coord_x,
-               double coord_y, double perturb) {
+               double coord_y, double perturb, double x_extent, double y_extent) {
     assert(radius >= 0 && coord_x >= 0 && coord_y >=0 && perturb >= 0);
     assert((radius+coord_x)/2 < x_extent/2 && (radius+coord_y)/2 < y_extent/2);
     float dphi = dy/dx;
@@ -47,7 +47,7 @@ void set_disk (gsl_matrix* field_in, double dx, double dy, double radius, double
     }
 }
 void set_gaussian (gsl_matrix* field_in,  double dx, double dy, double sigma, double coord_x,
-                   double coord_y, double perturb) {
+                   double coord_y, double perturb, double x_extent, double y_extent) {
     assert(sigma >=0 && coord_x >= 0 && coord_y >= 0 && perturb >=0);
     assert((coord_x + sigma)/2 < x_extent/2 && (1/dy + coord_y < y_extent/2));
     for (int i = 0; i <= round(5*sigma/dx); i++) {
