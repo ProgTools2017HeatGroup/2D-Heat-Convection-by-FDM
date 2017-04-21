@@ -1,5 +1,5 @@
-#ifndef STABILITY_CONDITION
-#define STABILITY_CONDITION
+#ifndef STABILITY_CONDITION_H
+#define STABILITY_CONDITION_H
 
 #include "generate_regular_grid.h"
 #include "calculate_velocity.h"

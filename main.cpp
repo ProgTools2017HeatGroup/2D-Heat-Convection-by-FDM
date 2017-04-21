@@ -17,6 +17,7 @@
 #include "utility.h"
 #include "set_density.h"
 #include "calculate_temperature.h"
+#include "calculate_velocity.h"
 
 using namespace std;
 /**
@@ -91,7 +92,6 @@ int main(int argc, char* argv[])
     vector<string> str;
  
     read_infile(infile, str);
-
    
     store_params(str, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &left_con, &right_con, &bottom_con, &top_con,
         &left_condition, &right_condition, &bottom_condition, &top_condition, &temp_left, &temp_right, &temp_bottom,

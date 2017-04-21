@@ -1,3 +1,6 @@
+#ifndef DENSITY_H
+#define DENSITY_H
+
 #include <gsl/gsl_matrix.h>
 #include <iostream>
 
@@ -10,3 +13,4 @@ void set_density (gsl_matrix* T_o, gsl_matrix* rho, double Tback, double alpha, 
         }
     }
 }
+#endif

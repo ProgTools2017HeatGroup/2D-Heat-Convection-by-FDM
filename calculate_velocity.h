@@ -1,3 +1,6 @@
+#ifndef CALCULATE_VELOCITY_H
+#define CALCULATE_VELOCITY_H
+
 #include <iostream>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_linalg.h>
@@ -144,3 +147,4 @@ void set_horizontal_velocity (gsl_matrix* rho, int nx, int ny, double eta, doubl
 void set_vertical_velocity (gsl_matrix* rho, int nx, int ny, double eta, double dx, double dy, string left_condition,
                 string right_condition, string top_condition, string bottom_condition, double left_velocity,
                 double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* vertical_velocity);
+#endif

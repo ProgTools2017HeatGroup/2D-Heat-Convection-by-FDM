@@ -1,5 +1,5 @@
-#ifndef INITIAL_FIELDS
-#define INITIAL_FIELDS
+#ifndef INITIAL_TEMP_H
+#define INITIAL_TEMP_H
 
 #include <math.h>
 #include <cassert>

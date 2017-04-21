@@ -3,7 +3,6 @@
 
 #include "stability_condition.h"
 #include "initial_temp.h"
-#include "stability_condition.h"
 
 void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, float kappa, double dt, int left_condition,
                 int right_condition, int top_condition, int bottom_condition, double left_temp, gsl_matrix* T1,

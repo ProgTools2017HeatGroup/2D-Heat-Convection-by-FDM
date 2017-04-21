@@ -1,5 +1,5 @@
-#ifndef REGULAR_GRID
-#define REGULAR_GRID
+#ifndef GENERATE_REGULAR_GRID_H
+#define GENERATE_REGULAR_GRID_H
 
 double get_dx (int x_extent, int nx) {
     return x_extent/nx;
