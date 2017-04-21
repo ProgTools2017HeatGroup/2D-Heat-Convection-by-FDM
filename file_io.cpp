@@ -37,25 +37,26 @@ int read_infile(char* args, vector<string> &str)
     return 0;
 }
 
-int store_params(vector<string> &str, float *rho, float *vis, float *diff, float *expa,
+int store_params(vector<string> &str, double *rho, double *vis, double *diff, double *expa,
     int *xe, int *ye, int *nx, int *ny, string *left_con, string *right_con, string *bottom_con,
-    string *top_con, int *left_conditon, int *right_condition, int *bottom_condition, int *top_condition,
-    double *temp_left, double *temp_right, double *temp_bottom, double *temp_top, float ***P, float ***T, float ***Vx,
-    float ***Vy, float *total_time, float *output_fre, string *simul_type)
+    string *top_con, int *left_condition, int *right_condition, int *bottom_condition, int *top_condition,
+    double *temp_left, double *temp_right, double *temp_bottom, double *temp_top, double *velo_left,
+    double *velo_right, double *velo_bottom, double *velo_top, double *Temp, double *total_time,
+    double *output_fre, string *simul_type)
 {
     size_t i = 0;
     while ( i<str.size() )
     {
         if (str[i] == "density")
         {
-            if (read_float(str, i, *rho) || check_vari_float(*rho,0))
+            if (read_double(str, i, *rho) || check_vari_double(*rho,0))
             {
                 print_error();
             }
         }
         if (str[i] == "viscosity")
         {
-            if (read_float(str, i, *vis) || check_vari_float(*vis,0))
+            if (read_double(str, i, *vis) || check_vari_double(*vis,0))
             {
                 print_error();
             }
@@ -63,14 +64,14 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
         }
         if (str[i] == "diffusivity")
         {
-            if (read_float(str, i, *diff) || check_vari_float(*diff,0))
+            if (read_double(str, i, *diff) || check_vari_double(*diff,0))
             {
                 print_error();
             }
         }
         if (str[i] == "expansion_coefficient")
         {
-            read_float(str, i, *expa);
+            read_double(str, i, *expa);
         }
         if (str[i] == "x_extend")
         {
@@ -134,42 +135,62 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
         }
         if (str[i] == "temp_left_value")
         {
-            read_double(str, i, *tmp_left);
+            read_double(str, i, *temp_left);
         }
         if (str[i] == "temp_right_value")
         {
-            read_double(str, i, *tmp_right);
+            read_double(str, i, *temp_right);
         }
         if (str[i] == "temp_bottom_value")
         {
-            read_double(str, i, *tmp_bottom);
+            read_double(str, i, *temp_bottom);
         }
         if (str[i] == "temp_top_value")
         {
-            read_double(str, i, *tmp_top);
+            read_double(str, i, *temp_top);
         }
+        if (str[i] == "velocity_left_value")
+        {
+            read_double(str, i, *velo_left);
+        }
+        if (str[i] == "velocity_right_value")
+        {
+            read_double(str, i, *temp_right);
+        }
+        if (str[i] == "velocity_bottom_value")
+        {
+            read_double(str, i, *temp_bottom);
+        }
+        if (str[i] == "velocity_top_value")
+        {
+            read_double(str, i, *temp_top);
+        }
+//        if (str[i] == "Temperature")
+//        {
+//            allocate_matrix(T, *nx, *ny);
+//            read_matrix(str, i, T, nx, ny);
+//        }
+//        if (str[i] == "Velocity_X")
+//        {
+//            allocate_matrix(Vx, *nx, *ny);
+//            read_matrix(str, i, Vx, nx, ny);
+//        }
+//        if (str[i] == "Velocity_Y")
+//        {
+//            allocate_matrix(Vy, *nx, *ny);
+//            read_matrix(str, i, Vy, nx, ny);
+//        }
         if (str[i] == "Temperature")
         {
-            allocate_matrix(T, *nx, *ny);
-            read_matrix(str, i, T, nx, ny);
-        }
-        if (str[i] == "Velocity_X")
-        {
-            allocate_matrix(Vx, *nx, *ny);
-            read_matrix(str, i, Vx, nx, ny);
-        }
-        if (str[i] == "Velocity_Y")
-        {
-            allocate_matrix(Vy, *nx, *ny);
-            read_matrix(str, i, Vy, nx, ny);
+            read_double(str, i, *Temp);
         }
         if (str[i] == "total_time")
         {
-            read_float(str, i, *total_time);
+            read_double(str, i, *total_time);
         }
-        if (str[i] == "output_fre")
+        if (str[i] == "output_frequency")
         {
-            read_float(str, i, *output_fre);
+            read_double(str, i, *output_fre);
         }
         if (str[i] == "simulation_type")
         {
@@ -180,9 +201,12 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
     return 0;
 }
 
-int write_logfile(char* args, float *rho, float *vis, float *diff,
-    float *expa, int *xe, int *ye, int *nx, int *ny, float ***P, float ***T, float ***Vx,
-    float ***Vy)
+int write_logfile(char* args, double *rho, double *vis, double *diff, double *expa,
+    int *xe, int *ye, int *nx, int *ny, string *left_con, string *right_con, string *bottom_con,
+    string *top_con, int *left_condition, int *right_condition, int *bottom_condition, int *top_condition,
+    double *temp_left, double *temp_right, double *temp_bottom, double *temp_top, double *velo_left,
+    double *velo_right, double *velo_bottom, double *velo_top, double *Temp, double *total_time,
+    double *output_fre, string *simul_type)
 {
     ofstream logfile;
     logfile.open(args);
@@ -194,34 +218,54 @@ int write_logfile(char* args, float *rho, float *vis, float *diff,
     logfile << "y_extend =\n" << scientific << *ye << endl;
     logfile << "nx =\n" << scientific << *nx << endl;
     logfile << "ny =\n" << scientific << *ny << endl;
-    int j, k;
-    logfile << "Temperature =\n";
-    for (j = 0; j < *nx; j = j + 1)
-    {
-        for (k = 0; k < *ny; k = k + 1)
-        {
-            logfile << scientific << (*T)[j][k] << "\t";
-        }
-        logfile << "\n";
-    }
-    logfile << "Velocity_X =\n";
-    for (j = 0; j < *nx; j = j + 1)
-    {
-        for (k = 0; k < *ny; k = k + 1)
-        {
-            logfile << scientific << (*Vx)[j][k] << "\t";
-        }
-        logfile << "\n";
-    }
-    logfile << "Velocity_Y =\n";
-    for (j = 0; j < *nx; j = j + 1)
-    {
-        for (k = 0; k < *ny; k = k + 1)
-        {
-            logfile << scientific << (*Vy)[j][k] << "\t";
-        }
-        logfile << "\n";
-    }
+    logfile << "left_condition =\n" << *left_con << endl;
+    logfile << "right_condition =\n" << *right_con << endl;
+    logfile << "bottom_condition =\n" << *bottom_con << endl;
+    logfile << "top_condition =\n" << *top_con << endl;
+    logfile << "temp_left_condition =\n" << scientific << *left_condition << endl;
+    logfile << "temp_right_condition =\n" << scientific << *right_condition << endl;
+    logfile << "temp_bottom_condition =\n" << scientific << *bottom_condition << endl;
+    logfile << "temp_top_condition =\n" << scientific << *top_condition << endl;
+    logfile << "temp_left_value =\n" << scientific << *temp_left << endl;
+    logfile << "temp_right_value =\n" << scientific << *temp_left << endl;
+    logfile << "temp_bottom_value =\n" << scientific << *temp_bottom << endl;
+    logfile << "temp_top_value =\n" << scientific << *temp_top << endl;
+//    int j, k;
+//    logfile << "Temperature =\n";
+//    for (j = 0; j < *nx; j = j + 1)
+//    {
+//        for (k = 0; k < *ny; k = k + 1)
+//        {
+//            logfile << scientific << (*T)[j][k] << "\t";
+//        }
+//        logfile << "\n";
+//    }
+//    logfile << "Velocity_X =\n";
+//    for (j = 0; j < *nx; j = j + 1)
+//    {
+//        for (k = 0; k < *ny; k = k + 1)
+//        {
+//            logfile << scientific << (*Vx)[j][k] << "\t";
+//        }
+//        logfile << "\n";
+//    }
+//    logfile << "Velocity_Y =\n";
+//    for (j = 0; j < *nx; j = j + 1)
+//    {
+//        for (k = 0; k < *ny; k = k + 1)
+//        {
+//            logfile << scientific << (*Vy)[j][k] << "\t";
+//        }
+//        logfile << "\n";
+//    }
+    logfile << "velo_left_value =\n" << scientific << *velo_left << endl;
+    logfile << "velo_right_value =\n" << scientific << *velo_left << endl;
+    logfile << "velo_bottom_value =\n" << scientific << *velo_bottom << endl;
+    logfile << "velo_top_value =\n" << scientific << *velo_top << endl;
+    logfile << "Temp =\n" << scientific << *Temp << endl;
+    logfile << "total_time =\n" << scientific << *total_time << endl;
+    logfile << "output_frequency=\n" << scientific << *output_fre << endl;
+    logfile << "simulation_type=\n" << *simul_type << endl;
 
     logfile.close();
 

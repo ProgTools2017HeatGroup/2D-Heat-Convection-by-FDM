@@ -11,16 +11,16 @@ using namespace std;
 //  output values in scientific form
 using std::scientific;
 
-int read_float(vector<string> &str, int i, float &float_value)
+int read_double(vector<string> &str, int i, double &double_value)
 {
 
     cout << str[i] << "\t=" << endl;
 
     char* c;
     c = const_cast<char*>(str[i + 2].c_str());
-    sscanf(c, "%e", &float_value);
+    sscanf(c, "%lf", &double_value);
 
-    cout << scientific << float_value << endl << "\n";
+    cout << scientific << double_value << endl << "\n";
 
     return 0;
 }
@@ -48,7 +48,7 @@ int read_string(vector<string> &str, int i, string &string_value)
 }
 
 
-int read_matrix(vector<string> &str, int i, float ***matr, int *nx, int *ny)
+int read_matrix(vector<string> &str, int i, double ***matr, int *nx, int *ny)
 {
 
     cout << str[i] << "\t=" << endl;
@@ -59,7 +59,7 @@ int read_matrix(vector<string> &str, int i, float ***matr, int *nx, int *ny)
         for (k = 0; k < *ny; k = k + 1)
         {
             c = const_cast<char*>(str[i + 2].c_str());
-            sscanf(c, "%e", &(*matr)[j][k]);
+            sscanf(c, "%lf", &(*matr)[j][k]);
             cout << scientific << (*matr)[j][k] << "\t";
             i++;
         }
@@ -70,9 +70,9 @@ int read_matrix(vector<string> &str, int i, float ***matr, int *nx, int *ny)
     return 0;
 }
 
-int check_vari_float(float &vari_float, float threshold)
+int check_vari_double(double &vari_double, double threshold)
 {
-    if (vari_float >= threshold)
+    if (vari_double >= threshold)
     {
         return 0;
     }
@@ -100,15 +100,15 @@ void print_error()
     exit(EXIT_FAILURE);
 }
 
-int allocate_matrix(float ***M, int nx, int ny)
+int allocate_matrix(double ***M, int nx, int ny)
 {
     int i;
-    (*M) = (float**)malloc(sizeof(float*)*nx);
+    (*M) = (double**)malloc(sizeof(double*)*nx);
     if (*M == NULL)
         return 1;
 
     for (i = 0; i<nx; i++) {
-        (*M)[i] = (float*)malloc(sizeof(float)*ny);
+        (*M)[i] = (double*)malloc(sizeof(double)*ny);
         if ((*M)[i] == NULL)
             return 1;
     }

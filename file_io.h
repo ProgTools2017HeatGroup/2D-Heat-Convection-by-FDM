@@ -13,11 +13,17 @@
 using namespace std;
 
 int read_infile(char* args, vector<string> &str);
-int store_params(vector<string> &str, float *rho, float *vis, float *diff, float *expa,
-    int *xe, int *ye, int *nx, int *ny, float ***P, float ***T, float ***Vx,
-    float ***Vy);
-int write_logfile(char* agrs, float *rho, float *vis, float *diff,
-    float *expa, int *xe, int *ye, int *nx, int *ny, float ***P, float ***T, float ***Vx,
-    float ***Vy);
+int store_params(vector<string> &str, double *rho, double *vis, double *diff, double *expa,
+    int *xe, int *ye, int *nx, int *ny, string *left_con, string *right_con, string *bottom_con,
+    string *top_con, int *left_condition, int *right_condition, int *bottom_condition, int *top_condition,
+    double *temp_left, double *temp_right, double *temp_bottom, double *temp_top, double *velo_left,
+    double *velo_right, double *velo_bottom, double *velo_top, double *Temp, double *total_time,
+    double *output_fre, string *simul_type);
+int write_logfile(char* args, double *rho, double *vis, double *diff, double *expa,
+    int *xe, int *ye, int *nx, int *ny, string *left_con, string *right_con, string *bottom_con,
+    string *top_con, int *left_condition, int *right_condition, int *bottom_condition, int *top_condition,
+    double *temp_left, double *temp_right, double *temp_bottom, double *temp_top, double *velo_left,
+    double *velo_right, double *velo_bottom, double *velo_top, double *Temp, double *total_time,
+    double *output_fre, string *simul_type);
 
 #endif
