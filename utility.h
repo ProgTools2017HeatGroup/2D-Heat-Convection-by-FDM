@@ -14,6 +14,7 @@ using namespace std;
 
 int read_float(vector<string> &str, int i, float &float_value);
 int read_int(vector<string> &str, int i, int &int_value);
+int read_string(vector<string> &str, int i, string &string_value);
 int read_matrix(vector<string> &str, int i, float ***matr, int *nx, int *ny);
 int check_vari_float(float &vari_float, float threshold);
 int check_vari_int(int &vari_int, int threshold);

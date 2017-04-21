@@ -83,8 +83,6 @@ int main(int argc, char* argv[])
 //    check_infile(argc);
 
     read_infile(infile, str);
-
-    
     
     store_params(str, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &P, &T, &Vx, &Vy);
 

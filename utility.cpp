@@ -37,6 +37,16 @@ int read_int(vector<string> &str, int i, int &int_value)
     return 0;
 }
 
+int read_string(vector<string> &str, int i, string &string_value)
+{
+
+    cout << str[i] << "\t=" << endl;
+    string_value = str[i + 2];
+    cout << string_value << endl << "\n";
+
+    return 0;
+}
+
 
 int read_matrix(vector<string> &str, int i, float ***matr, int *nx, int *ny)
 {

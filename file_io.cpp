@@ -38,8 +38,10 @@ int read_infile(char* args, vector<string> &str)
 }
 
 int store_params(vector<string> &str, float *rho, float *vis, float *diff, float *expa,
-    int *xe, int *ye, int *nx, int *ny, float ***P, float ***T, float ***Vx,
-    float ***Vy)
+    int *xe, int *ye, int *nx, int *ny, string *left_con, string *right_con, string *bottom_con,
+    string *top_con, int *left_conditon, int *right_condition, int *bottom_condition, int *top_condition,
+    double *temp_left, double *temp_right, double *temp_bottom, double *temp_top, float ***P, float ***T, float ***Vx,
+    float ***Vy, float *total_time, float *output_fre, string *simul_type)
 {
     size_t i = 0;
     while ( i<str.size() )
@@ -98,6 +100,54 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
                 print_error();
             }
         }
+        if (str[i] == "left_condition")
+        {
+            read_string(str, i, *left_con);
+        }
+        if (str[i] == "right_condition")
+        {
+            read_string(str, i, *right_con);
+        }
+        if (str[i] == "bottom_condition")
+        {
+            read_string(str, i, *bottom_con);
+        }
+        if (str[i] == "top_condition")
+        {
+            read_string(str, i, *top_con);
+        }
+        if (str[i] == "temp_left_condition")
+        {
+            read_int(str, i, *left_condition);
+        }
+        if (str[i] == "temp_right_condition")
+        {
+            read_int(str, i, *right_condition);
+        }
+        if (str[i] == "temp_bottom_condition")
+        {
+            read_int(str, i, *bottom_condition);
+        }
+        if (str[i] == "temp_top_condition")
+        {
+            read_int(str, i, *top_condition);
+        }
+        if (str[i] == "temp_left_value")
+        {
+            read_double(str, i, *tmp_left);
+        }
+        if (str[i] == "temp_right_value")
+        {
+            read_double(str, i, *tmp_right);
+        }
+        if (str[i] == "temp_bottom_value")
+        {
+            read_double(str, i, *tmp_bottom);
+        }
+        if (str[i] == "temp_top_value")
+        {
+            read_double(str, i, *tmp_top);
+        }
         if (str[i] == "Temperature")
         {
             allocate_matrix(T, *nx, *ny);
@@ -112,6 +162,18 @@ int store_params(vector<string> &str, float *rho, float *vis, float *diff, float
         {
             allocate_matrix(Vy, *nx, *ny);
             read_matrix(str, i, Vy, nx, ny);
+        }
+        if (str[i] == "total_time")
+        {
+            read_float(str, i, *total_time);
+        }
+        if (str[i] == "output_fre")
+        {
+            read_float(str, i, *output_fre);
+        }
+        if (str[i] == "simulation_type")
+        {
+            read_string(str, i, *simul_type);
         }
         i++;
     }
