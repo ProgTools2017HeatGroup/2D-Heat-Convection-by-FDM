@@ -60,9 +60,9 @@ int read_matrix(vector<string> &str, int i, float ***matr, int *nx, int *ny)
     return 0;
 }
 
-int check_vari_float(float &vari_float)
+int check_vari_float(float &vari_float, float threshold)
 {
-    if (vari_float > 0) 
+    if (vari_float >= threshold)
     {
         return 0;
     }
@@ -72,9 +72,9 @@ int check_vari_float(float &vari_float)
     }
 }
 
-int check_vari_int(int &vari_int)
+int check_vari_int(int &vari_int, int threshold)
 {
-    if (vari_int > 0)
+    if (vari_int >= threshold)
     {
         return 0;
     }
