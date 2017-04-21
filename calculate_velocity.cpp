@@ -8,7 +8,7 @@ void set_horizontal_velocity (gsl_matrix* rho, int nx, int ny, double eta, doubl
                 double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* horizontal_velocity) {
 
     gsl_vector *x = gsl_vector_alloc (ny*nx);
-    set_omega (rho, gx, nx, ny, eta, dx, dy);
+    set_omega (rho, x, nx, ny, eta, dx, dy);
 
     gsl_matrix* psi = gsl_matrix_alloc (ny, nx);
     set_psi (psi, x, nx, ny, dx, dy, left_condition, right_condition, top_condition,

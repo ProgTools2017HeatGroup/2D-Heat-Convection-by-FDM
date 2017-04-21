@@ -150,7 +150,6 @@ int main(int argc, char* argv[])
     // allocate memory for initial temperature
     gsl_matrix* T1 = gsl_matrix_alloc(ny,nx);
 
-    string simul_type = "IMPLICIT";
     if (simul_type == "IMPLICIT") {
     implicit_T1 (To, nx, ny, dx, dy, diff , dt, left_condition, right_condition, top_condition, 
                 bottom_condition, temp_left , T1, temp_right, temp_top, temp_bottom, total_time,
@@ -165,4 +164,9 @@ int main(int argc, char* argv[])
 //    cout << time << endl;
 
     return 0;
+    gsl_matrix_free (T1);
+    gsl_matrix_free (To);
+    gsl_matrix_free (vx);
+    gsl_matrix_free (vy);
+    gsl_matrix_free (rho_m);
 }
