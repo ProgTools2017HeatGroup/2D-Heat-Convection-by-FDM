@@ -14,8 +14,8 @@ void set_horizontal_velocity (gsl_matrix* rho, int nx, int ny, double eta, doubl
     set_psi (psi, x, nx, ny, dx, dy, left_condition, right_condition, top_condition,
             bottom_condition, left_velocity, right_velocity, top_velocity, bottom_velocity);
 
-    for (int i = 1; i < ny - 1; i++) {
-	    for (int j = 1; j < nx - 1; j++) {
+    for (int i = 0; i < ny ; i++) {
+	    for (int j = 0; j < nx ; j++) {
             gsl_matrix_set(horizontal_velocity, i, j, (gsl_matrix_get(psi, i+1, j) -
 	        gsl_matrix_get(psi, i-1, j)/(2*dy)));
 	    }
@@ -35,8 +35,8 @@ void set_vertical_velocity (gsl_matrix* rho, int nx, int ny, double eta, double 
     set_psi (psi, x, nx, ny, dx, dy, left_condition, right_condition, top_condition, bottom_condition, 
             left_velocity, right_velocity, top_velocity, bottom_velocity);
 
-    for (int i = 1; i < ny - 1; i++) {
-	    for (int j = 1; j < nx - 1; j++) {
+    for (int i = 0; i < ny ; i++) {
+	    for (int j = 0; j < nx ; j++) {
             gsl_matrix_set(vertical_velocity, i, j, -(gsl_matrix_get(psi, i, j+1) -
 	        gsl_matrix_get(psi, i, j-1)/(2*dx)));
 	    }
