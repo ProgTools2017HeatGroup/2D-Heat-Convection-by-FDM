@@ -15,14 +15,18 @@ Runing code
 5. Output frequency is calculated to be stable based on input value
 
 Units
+
 Our code itself has no internal knowledge of units. which means the user has the freedom to choose a preferred units system, as long as they are consistent. Also, the user may have to scale the units to make the solver stable.
 
 Domain dimensions
+
 The domain in this model is currently 100*100, users can modify it in the parameter.in file. 
 
 Total time steps
+
 The user can modify total time step to model to iterate, the default value in the parameter.in file is 200
 
 Result visualization
+
 The output result is in file type .vts for each time step
 To view the output files, using ParaView or any other software you desire
