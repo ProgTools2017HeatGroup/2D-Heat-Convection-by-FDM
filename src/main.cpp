@@ -92,11 +92,17 @@ int main(int argc, char* argv[])
     vector<string> str;
  
     read_infile(infile, str);
-   
+    
+    cout << "Storing input value" << endl;
+    
+    //Store input parameter value
     store_params(str, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &left_con, &right_con, &bottom_con, &top_con,
         &left_condition, &right_condition, &bottom_condition, &top_condition, &temp_left, &temp_right, &temp_bottom,
         &temp_top, &velo_left, &velo_right, &velo_bottom, &velo_top, &Temp, &total_time, &output_fre, &simul_type);
- 
+    
+    cout << "generating input logfile" << endl;
+    
+    //Write input value to logfile
     write_logfile(logfile, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &left_con, &right_con, &bottom_con, &top_con,
         &left_condition, &right_condition, &bottom_condition, &top_condition, &temp_left, &temp_right, &temp_bottom,
         &temp_top, &velo_left, &velo_right, &velo_bottom, &velo_top, &Temp, &total_time, &output_fre, &simul_type);
@@ -138,17 +144,34 @@ int main(int argc, char* argv[])
     // allocate memory for velocities
     gsl_matrix* vx = gsl_matrix_alloc(ny,nx);
     gsl_matrix* vy = gsl_matrix_alloc(ny,nx);
-
+    
+    cout << "Generating velocity field" << endl;
+    
+    // Calculate horizontal velocity for each mesh grid in the domain based on input and boundary condition
     set_horizontal_velocity (rho_m, nx, ny, vis, dx, dy, left_con, right_con, top_con, bottom_con, velo_left, 
             velo_right,  velo_top,  velo_bottom, vx);
     set_vertical_velocity (rho_m, nx, ny, vis, dx, dy, left_con, right_con, top_con, bottom_con, velo_left, 
             velo_right,  velo_top,  velo_bottom, vy);
-
+    
+    //Calculates stable iteration time step based on the user input
+    
+    cout << "Calculating stable iteration time step based input" << endl;
+    
     double dt = stable_time (xe, ye, nx, ny, diff, vx, vy, dx, dy);
-     
+    
     // allocate memory for initial temperature
     gsl_matrix* T1 = gsl_matrix_alloc(ny,nx);
-
+    
+    
+    
+    
+    cout << "Soving for tempreture distrubution in the domain for each time step" <<endl;
+    
+    // Soving for dT/dt+vx*dT/dx+vy*dT/dy=kappa*(d2T/dx2+d2T/dy2)
+    // Composing matrix of coefficients mat()
+    // and vector (column) of right parts b()
+    // Process all grid points for Implicit Solving
+    
     if (simul_type == "IMPLICIT") {
     implicit_T1 (To, nx, ny, dx, dy, diff , dt, left_condition, right_condition, top_condition, 
                 bottom_condition, temp_left , T1, temp_right, temp_top, temp_bottom, total_time,
