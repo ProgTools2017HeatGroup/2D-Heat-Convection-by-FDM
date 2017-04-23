@@ -41,7 +41,8 @@ int store_params(vector<string> &str, double *rho, double *vis, double *diff, do
     int *xe, int *ye, int *nx, int *ny, string *left_con, string *right_con, string *bottom_con,
     string *top_con, int *left_condition, int *right_condition, int *bottom_condition, int *top_condition,
     double *temp_left, double *temp_right, double *temp_bottom, double *temp_top, double *velo_left,
-    double *velo_right, double *velo_bottom, double *velo_top, double *Temp, double *total_time,
+    double *velo_right, double *velo_bottom, double *velo_top, double *Temp, string *pert_type, double *xo,
+    double *yo, double *pert_T, double *length, double *width, double *radius, double *sigma, double *total_time,
     double *output_fre, string *simul_type)
 {
     size_t i = 0;
@@ -104,34 +105,66 @@ int store_params(vector<string> &str, double *rho, double *vis, double *diff, do
         if (str[i] == "left_condition")
         {
             read_string(str, i, *left_con);
+            if (check_vari_string(*left_con, "NO_SLIP") && check_vari_string(*left_con, "FREE_SLIP"))
+            {
+                print_error();
+            }
         }
         if (str[i] == "right_condition")
         {
             read_string(str, i, *right_con);
+            if (check_vari_string(*right_con, "NO_SLIP") && check_vari_string(*right_con, "FREE_SLIP"))
+            {
+                print_error();
+            }
         }
         if (str[i] == "bottom_condition")
         {
             read_string(str, i, *bottom_con);
+            if (check_vari_string(*bottom_con, "NO_SLIP") && check_vari_string(*bottom_con, "FREE_SLIP"))
+            {
+                print_error();
+            }
         }
         if (str[i] == "top_condition")
         {
             read_string(str, i, *top_con);
+            if (check_vari_string(*top_con, "NO_SLIP") && check_vari_string(*top_con, "FREE_SLIP"))
+            {
+                print_error();
+            }
         }
         if (str[i] == "temp_left_condition")
         {
-            read_int(str, i, *left_condition);
+            if (read_int(str, i, *left_condition) || check_vari_int(*left_condition, 0)
+                || !check_vari_int(*left_condition, 2))
+            {
+                print_error();
+            }
         }
         if (str[i] == "temp_right_condition")
         {
-            read_int(str, i, *right_condition);
+            if (read_int(str, i, *right_condition) || check_vari_int(*right_condition, 0)
+                || !check_vari_int(*right_condition, 2))
+            {
+                print_error();
+            }
         }
         if (str[i] == "temp_bottom_condition")
         {
-            read_int(str, i, *bottom_condition);
+            if (read_int(str, i, *bottom_condition) || check_vari_int(*bottom_condition, 0)
+                || !check_vari_int(*bottom_condition, 2))
+            {
+                print_error();
+            }
         }
         if (str[i] == "temp_top_condition")
         {
-            read_int(str, i, *top_condition);
+            if (read_int(str, i, *top_condition) || check_vari_int(*top_condition, 0)
+                || !check_vari_int(*top_condition, 2))
+            {
+                print_error();
+            }
         }
         if (str[i] == "temp_left_value")
         {
@@ -184,6 +217,43 @@ int store_params(vector<string> &str, double *rho, double *vis, double *diff, do
         {
             read_double(str, i, *Temp);
         }
+        if (str[i] == "perturbation_type")
+        {
+            read_string(str, i, *pert_type);
+            if( check_vari_string(*pert_type, "BOX") && check_vari_string(*pert_type, "DISK")
+                && check_vari_string(*pert_type, "GAUSSIAN"))
+            {
+                print_error();
+            }
+        }
+        if (str[i] == "xo")
+        {
+            read_double(str, i, *xo);
+        }
+        if (str[i] == "yo")
+        {
+            read_double(str, i, *yo);
+        }
+        if (str[i] == "length")
+        {
+            read_double(str, i, *length);
+        }
+        if (str[i] == "width")
+        {
+            read_double(str, i, *width);
+        }
+        if (str[i] == "perturbation_T")
+        {
+            read_double(str, i, *pert_T);
+        }
+        if (str[i] == "radius")
+        {
+            read_double(str, i, *radius);
+        }
+        if (str[i] == "sigma")
+        {
+            read_double(str, i, *sigma);
+        }
         if (str[i] == "total_time")
         {
             read_double(str, i, *total_time);
@@ -205,7 +275,8 @@ int write_logfile(char* args, double *rho, double *vis, double *diff, double *ex
     int *xe, int *ye, int *nx, int *ny, string *left_con, string *right_con, string *bottom_con,
     string *top_con, int *left_condition, int *right_condition, int *bottom_condition, int *top_condition,
     double *temp_left, double *temp_right, double *temp_bottom, double *temp_top, double *velo_left,
-    double *velo_right, double *velo_bottom, double *velo_top, double *Temp, double *total_time,
+    double *velo_right, double *velo_bottom, double *velo_top, double *Temp, string *pert_type, double *xo,
+    double *yo, double *pert_T, double *length, double *width, double *radius, double *sigma, double *total_time,
     double *output_fre, string *simul_type)
 {
     ofstream logfile;
@@ -263,6 +334,29 @@ int write_logfile(char* args, double *rho, double *vis, double *diff, double *ex
     logfile << "velo_bottom_value =\n" << scientific << *velo_bottom << endl;
     logfile << "velo_top_value =\n" << scientific << *velo_top << endl;
     logfile << "Temp =\n" << scientific << *Temp << endl;
+    logfile << "perturbation_type =\n" << *pert_type << endl;
+    if (*pert_type == "BOX")
+    {
+        logfile << "xo =\n" << scientific << *xo << endl;
+        logfile << "yo =\n" << scientific << *yo << endl;
+        logfile << "length =\n" << scientific << *length << endl;
+        logfile << "width =\n" << scientific << *width << endl;
+        logfile << "perturbation_T =\n" << scientific << *pert_T << endl;
+    }
+    else if (*pert_type == "DISK")
+    {
+        logfile << "xo =\n" << scientific << *xo << endl;
+        logfile << "yo =\n" << scientific << *yo << endl;
+        logfile << "radius =\n" << scientific << *radius << endl;
+        logfile << "perturbation_T =\n" << scientific << *pert_T << endl;
+    }
+    else if (*pert_type == "GAUSSIAN")
+    {
+        logfile << "xo =\n" << scientific << *xo << endl;
+        logfile << "yo =\n" << scientific << *yo << endl;
+        logfile << "sigma =\n" << scientific << *sigma << endl;
+        logfile << "perturbation_T =\n" << scientific << *pert_T << endl;
+    }
     logfile << "total_time =\n" << scientific << *total_time << endl;
     logfile << "output_frequency=\n" << scientific << *output_fre << endl;
     logfile << "simulation_type=\n" << *simul_type << endl;

@@ -18,6 +18,7 @@ int read_string(vector<string> &str, int i, string &string_value);
 int read_matrix(vector<string> &str, int i, double ***matr, int *nx, int *ny);
 int check_vari_double(double &vari_double, double threshold);
 int check_vari_int(int &vari_int, int threshold);
+int check_vari_string(string &vari_string, string threshold);
 void print_error();
 int allocate_matrix(double ***M, int nx, int ny);
 void free_matrix(double ***M, int nx);

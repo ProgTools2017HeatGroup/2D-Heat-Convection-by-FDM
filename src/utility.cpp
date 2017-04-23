@@ -95,6 +95,11 @@ int check_vari_int(int &vari_int, int threshold)
     }
 }
 
+int check_vari_string(string &vari_string, string threshold)
+{
+    return vari_string.compare(threshold);
+}
+
 void print_error()
 {
     cout << "Above is illegal input parameter, please check\n";

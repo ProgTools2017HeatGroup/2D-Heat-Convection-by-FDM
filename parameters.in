@@ -35,7 +35,7 @@ top_condition =
 FREE_SLIP
 
 temp_left_condition =
-1
+0
 
 temp_right_condition =
 1
@@ -72,6 +72,24 @@ velocity_top_value =
 
 Temperature = 
 1e3
+
+perturbation_type =
+BOX
+
+xo =
+4
+
+yo =
+5
+
+length =
+10
+
+width =
+10
+
+perturbation_T =
+50
 
 total_time =
 200
