@@ -18,6 +18,7 @@
 #include "set_density.h"
 #include "calculate_temperature.h"
 #include "calculate_velocity.h"
+#include "generate_output_in_vts.h"
 
 using namespace std;
 /**
@@ -182,6 +183,9 @@ int main(int argc, char* argv[])
                 bottom_condition, temp_left , T1, temp_right, temp_top, temp_bottom, total_time,
                 vx, vy);
     }
+    
+    //generate output file in .vts format
+    write_vts(dirname, dx, dy, x_ext, y_ext, time_step, nx, ny, T, Vx, Vy)
     
     std::cout << "Program runing time: "<<float( clock () - t1 ) / CLOCKS_PER_SEC<< endl;
     
