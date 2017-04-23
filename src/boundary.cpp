@@ -7,7 +7,6 @@ according to the boundary conditions.*/
 */
 #define BC_FREE_SLIP 1
 #define BC_NO_SLIP 2
-#include "boundary.hpp"
 #include <iostream>
 #include <fstream>
 #include <vector>
