@@ -2,7 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include <direct.h>
+#include <sys/stat.h>
 #include <gsl/gsl_matrix.h>
 using namespace std;
 

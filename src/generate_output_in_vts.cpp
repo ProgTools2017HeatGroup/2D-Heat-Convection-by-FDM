@@ -2,7 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include <direct.h>
+#include <sys/stat.h>
 #include <gsl/gsl_matrix.h>
 using namespace std;
 
@@ -25,7 +25,7 @@ int write_vts(string dirname, double dx, double dy, double x_ext, double y_ext, 
     cout << "Writing output file for current time step" << fname << endl;
     
     // Create output directory for outfile.
-    mkdir(dirname.c_str());
+    mkdir(dirname.c_str(),S_IRWXU);
     string fullpath = dirname + fname;
     
     // Create output file.
