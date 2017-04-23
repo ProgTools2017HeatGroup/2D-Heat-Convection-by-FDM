@@ -32,8 +32,8 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-//    clock_t start, end;
-//    start = clock();
+    //simple timing function
+    clock_t t1 = clock();  
 
     int opt;
     char *infile, *logfile;
@@ -182,9 +182,9 @@ int main(int argc, char* argv[])
                 bottom_condition, temp_left , T1, temp_right, temp_top, temp_bottom, total_time,
                 vx, vy);
     }
-//    double time = (double)(end - start) / CLOCKS_PER_SEC;
-//    cout << time << endl;
-
+    
+    std::cout << "Program runing time: "<<float( clock () - t1 ) / CLOCKS_PER_SEC<< endl;
+    
     return 0;
     gsl_matrix_free (T1);
     gsl_matrix_free (To);
