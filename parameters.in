@@ -2,7 +2,7 @@ density =
 3.3e3
 
 viscosity = 
-1e8
+1e19
 
 diffusivity = 
 1e-6
@@ -11,16 +11,16 @@ expansion_coefficient =
 3e-5
 
 nx =
-10
+21.
 
 ny =
-30
+21.
 
 x_extend =
-100
+500
 
 y_extend =
-100
+500
 
 left_condition =
 FREE_SLIP
@@ -59,16 +59,16 @@ temp_top_value =
 243
 
 velocity_left_value =
-3.45
+3.45e-7
 
 velocity_right_value =
-4.56
+0
 
 velocity_bottom_value =
-5.67
+0
 
 velocity_top_value =
-7.89
+7.89e-6
 
 Temperature = 
 1e3
@@ -77,19 +77,19 @@ perturbation_type =
 BOX
 
 xo =
-4
+100
 
 yo =
-5
+50
 
 length =
-10
+50
 
 width =
-10
+100
 
 perturbation_T =
-50
+2.e3
 
 total_time =
 200
