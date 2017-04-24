@@ -12,12 +12,8 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
 
     int tnum = round(total_time/dt); // number of time steps
 
-    enum type{
-    INSULATING, CONSTANT
-    };
-    type boundary;
-
     for (int t = 1; t <= tnum; t++) {
+        cout << t <<endl;
         // Allocate  matrix A in Ax = b
         gsl_matrix* mat = gsl_matrix_alloc (ny*nx, ny*nx);
         // Allocate  right side of vector , b
@@ -33,7 +29,7 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
                 if (i == 0 || i == ny - 1 || j == 0 || j == nx - 1) {
                     // Upper Boundary
                     if (i == 0) {
-                        switch (boundary) {
+                        switch (top_condition) {
                             case 0:
                                 gsl_matrix_set (mat, k, k, 1);
                                 gsl_matrix_set (mat, k, k+1, -1);
@@ -43,8 +39,9 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
                                 gsl_vector_set (b, k, top_temp);
                             }
                         }
+                   // Bottom boundary
                     else if (i == ny - 1) {
-                        switch (boundary) {
+                        switch (bottom_condition) {
                             case 0:
                                 gsl_matrix_set (mat, k, k, 1);
                                 gsl_matrix_set (mat, k, k-1, -1);
@@ -54,8 +51,9 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
                                 gsl_vector_set (b, k, bottom_temp);
                             }
                         }
+                    // left condition
                     else if (j == 1 && i > 0 && i < ny - 1){
-                        switch (boundary) {
+                        switch (left_condition) {
                             case 0:
                                 gsl_matrix_set (mat, k, k, 1);
                                 gsl_matrix_set (mat, k, k + ny, -1);
@@ -65,8 +63,9 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
                                 gsl_vector_set (b, k, left_temp);
                             }
                         }
+                   //risht condition
                     else if (j == nx - 1 && i > 0 && i < ny - 1){
-                        switch (boundary) {
+                        switch (right_condition) {
                             case 0:
                                 gsl_matrix_set (mat, k, k, 1);
                                 gsl_matrix_set (mat, k, k - ny, -1);

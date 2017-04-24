@@ -39,7 +39,6 @@ void set_omega (gsl_matrix* rho, gsl_vector* x, int nx, int ny, double eta, doub
     // Obtain vector of solutions x = (A^-1)*b
     gsl_linalg_LU_decomp (A, p, &s);
     gsl_linalg_LU_solve (A, p, b, x);
-
     gsl_permutation_free (p);
     gsl_vector_free (b);
     gsl_matrix_free(A);
@@ -57,66 +56,60 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
     // Allocate p for LU decomposition
     gsl_permutation* p = gsl_permutation_alloc (ny*nx);
 
-    // Process internal nodes
-    for (int i = 1; i < ny-1; i++) {
-	    for (int j = 1; j < nx-1; j++) {
+    // Process all nodes
+    for (int i = 0; i < ny; i++) {
+	    for (int j = 0; j < nx; j++) {
 	// Global index for current node
 	        int k = (j*ny) + i;
-	        if (j == 0 ) {
-                if (left_condition != "FREE_SLIP") {
-                    gsl_matrix_set (A, k, k, 1);
-                    gsl_vector_set (x, k, 0);
-                }
-                else {
-                    gsl_matrix_set (A, k, k, 1);
-                    gsl_vector_set (x, k, -left_velocity*dx);
-                }
-            }
-            else if (j == nx - 1 ) {
-                if (right_condition != "FREE_SLIP") {
-                    gsl_matrix_set (A, k, k, 1);
-                    gsl_vector_set (x, k, 0);
-                }
-                else {
-                    gsl_matrix_set (A, k, k, 1);
-                    gsl_vector_set (x, k, -right_velocity*dx);
-                }
-            }
 
-             else if (i == 0 && j > 0 && j < nx - 1) {
-                if (top_condition != "FREE_SLIP") {
+            if (i == 0 || i == ny - 1 || j == 0 || j == nx - 1) {             
+                if (j == 0 && left_condition == "NO_SLIP") {
+                        gsl_matrix_set (A, k, k, 1);
+                        gsl_vector_set (x, k, 0);
+                }
+                else if (j == 0 && left_condition == "FREE_SLIP") {
+                        gsl_matrix_set (A, k, k, 1);
+                        gsl_vector_set (x, k, -left_velocity*dx);
+                }
+                
+                else if (j == nx - 1 && right_condition == "NO_SLIP") {
                     gsl_matrix_set (A, k, k, 1);
                     gsl_vector_set (x, k, 0);
                 }
-                else {
-                    gsl_matrix_set (A, k, k, 1);
-                    gsl_vector_set (x, k, top_velocity*dy);
+                else if (j == nx - 1 && right_condition == "FREE_SLIP") {
+                        gsl_matrix_set (A, k, k, 1);
+                        gsl_vector_set (x, k, -right_velocity*dx);
                 }
-            }
-
-             else if (i == ny - 1 && j > 0 && j < nx - 1) {
-                if (bottom_condition != "FREE_SLIP") {
-                    gsl_matrix_set (A, k, k, 1);
-                    gsl_vector_set (x, k, 0);
+                else if (i == 0 && j > 0 && j < nx - 1 && top_condition == "NO_SLIP") {
+                        gsl_matrix_set (A, k, k, 1);
+                        gsl_vector_set (x, k, 0);
                 }
-                else {
-                    gsl_matrix_set (A, k, k, 1);
-                    gsl_vector_set (x, k, bottom_velocity*dy);
+                else if (i == 0 && j > 0 && j < nx - 1 && top_condition == "FREE_SLIP") {
+                        gsl_matrix_set (A, k, k, 1);
+                        gsl_vector_set (x, k, top_velocity*dy);
+                }
+                else if (i == ny - 1 && j > 0 && j < nx - 1 && bottom_condition == "NO_SLIP") {
+                        gsl_matrix_set (A, k, k, 1);
+                        gsl_vector_set (x, k, 0);
+                }
+                else if (i == ny - 1 && j > 0 && j < nx - 1 && bottom_condition == "FREE_SLIP") {
+                        gsl_matrix_set (A, k, k, 1);
+                        gsl_vector_set (x, k, bottom_velocity*dy);
                 }
             }
 
 	    // Internal nodes
             else {
             // A matrix
-                gsl_matrix_set (A, k, k - ny, (1.0/dx)*(1.0/dx));
-                gsl_matrix_set (A, k, k - 1, (1.0/dy)*(1.0/dy));
+                gsl_matrix_set (A, k, k - ny, (1/dx)*(1/dx));
+                gsl_matrix_set (A, k, k - 1, (1./dy)*(1.0/dy));
                 gsl_matrix_set (A, k, k, -2.0/(dx*dx) -2.0/(dy*dy));
                 gsl_matrix_set (A, k, k+1, (1.0/dy)*(1.0/dy));
                 gsl_matrix_set (A, k, k + ny, (1.0/dx)*(1.0/dx));
             }
         }
     }
-
+    
     gsl_vector *y = gsl_vector_alloc (ny*nx);
     gsl_linalg_LU_decomp (A, p, &s);
     gsl_linalg_LU_solve (A, p, x, y);
@@ -142,13 +135,23 @@ void set_horizontal_velocity (gsl_matrix* rho, int nx, int ny, double eta, doubl
     gsl_matrix* psi = gsl_matrix_alloc (ny, nx);
     set_psi (psi, x, nx, ny, dx, dy, left_condition, right_condition, top_condition,
             bottom_condition, left_velocity, right_velocity, top_velocity, bottom_velocity);
-
+    
     for (int i = 0; i < ny ; i++) {
 	    for (int j = 0; j < nx ; j++) {
-            gsl_matrix_set(horizontal_velocity, i, j, (gsl_matrix_get(psi, i+1, j) -
-	        gsl_matrix_get(psi, i-1, j)/(2*dy)));
+            if (i == 0) {
+                gsl_matrix_set(horizontal_velocity, i, j, (gsl_matrix_get(psi, i+1, j) -
+                gsl_matrix_get(psi, i, j)/(dy)));
+            }
+            else if (i == ny-1) {
+                gsl_matrix_set(horizontal_velocity, i, j, (gsl_matrix_get(psi, i, j) -
+                gsl_matrix_get(psi, i-1, j)/(dy)));
+            }
+            else {
+                gsl_matrix_set(horizontal_velocity, i, j, (gsl_matrix_get(psi, i+1, j) -
+                gsl_matrix_get(psi, i-1, j)/(2*dy)));
+            }
 	    }
-    }
+    }   
     gsl_vector_free (x);
     gsl_matrix_free (psi);
 }
@@ -159,15 +162,24 @@ void set_vertical_velocity (gsl_matrix* rho, int nx, int ny, double eta, double 
 
     gsl_vector *x = gsl_vector_alloc (ny*nx);
     set_omega (rho,  x, nx, ny, eta, dx, dy);
-
     gsl_matrix* psi = gsl_matrix_alloc (ny, nx);
     set_psi (psi, x, nx, ny, dx, dy, left_condition, right_condition, top_condition, bottom_condition, 
             left_velocity, right_velocity, top_velocity, bottom_velocity);
 
     for (int i = 0; i < ny ; i++) {
 	    for (int j = 0; j < nx ; j++) {
-            gsl_matrix_set(vertical_velocity, i, j, -(gsl_matrix_get(psi, i, j+1) -
-	        gsl_matrix_get(psi, i, j-1)/(2*dx)));
+            if (j == 0) {
+                gsl_matrix_set(vertical_velocity, i, j, -(gsl_matrix_get(psi, i, j) -
+                gsl_matrix_get(psi, i, j+1)/(dx)));
+            }
+            else if (j == nx-1) {
+                gsl_matrix_set(vertical_velocity, i, j, (gsl_matrix_get(psi, i, j) -
+                gsl_matrix_get(psi, i, j-1)/(dx)));
+            }
+            else {
+                gsl_matrix_set(vertical_velocity, i, j, (gsl_matrix_get(psi, i, j+1) -
+                gsl_matrix_get(psi, i, j-1)/(2*dx)));
+            }
 	    }
     }
     gsl_vector_free (x);

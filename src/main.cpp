@@ -16,10 +16,10 @@
 #include "file_io.h"
 #include "utility.h"
 #include "set_density.h"
-#include "boundary.h"
+//#include "boundary.h"
 #include "calculate_temperature.h"
 #include "calculate_velocity.h"
-#include "generate_output_in_vts.h"
+//#include "generate_output_in_vts.h"
 
 using namespace std;
 /**
@@ -113,25 +113,17 @@ int main(int argc, char* argv[])
         &width, &radius, &sigma, &total_time, &output_fre, &simul_type);
 
     // get points in X and Y direction for printing in output
-    int** X = generate_x_points (xe, ye, nx, ny);
-    int** Y = generate_y_points (xe, ye, nx, ny);
+//    int** X = generate_x_points (xe, ye, nx, ny);
+ //   int** Y = generate_y_points (xe, ye, nx, ny);
     // get grid spacing to be used in later programs
-    double dy = get_dy (ye, ny);
-    double dx = get_dy (xe, nx);
+    double dy = ye/(ny-1);
+    double dx = xe/(nx-1);
     
     // allocate memory for initial temperature
     gsl_matrix* To = gsl_matrix_alloc(ny,nx);
 
-    double back = 1300;
-    set_back_value (To, ny, nx, back);
-//    double length = 12; use length
-//    double height = 10; use width
-//    double coord_x = 5; use xo
-//    double coord_y = 5; use yo
-//    double perturb = 1500; use pert_T
-//    string pertub_type = "box"; use pert_type
-//    double sigma = 13; use sigma
-//    double radius = 5; use radius
+    set_back_value (To, ny, nx, Temp);
+
 
     if (pert_type == "BOX") {
         set_box (To, dx, dy, length, width, xo, yo, pert_T, xe, ye);
@@ -144,8 +136,9 @@ int main(int argc, char* argv[])
 
     // allocate memory for modified density
     gsl_matrix* rho_m = gsl_matrix_alloc(ny,nx);
-    set_density (To, rho_m, back, expa, rho, nx, ny);
-     
+    set_density (To, rho_m, pert_T, expa, rho, nx, ny);
+ 
+
     // allocate memory for velocities
     gsl_matrix* vx = gsl_matrix_alloc(ny,nx);
     gsl_matrix* vy = gsl_matrix_alloc(ny,nx);
@@ -163,14 +156,12 @@ int main(int argc, char* argv[])
     cout << "Calculating stable iteration time step based input" << endl;
     
     double dt = stable_time (xe, ye, nx, ny, diff, vx, vy, dx, dy);
+    cout << dt << endl;
     
     // allocate memory for initial temperature
     gsl_matrix* T1 = gsl_matrix_alloc(ny,nx);
     
-    
-    
-    
-    cout << "Soving for tempreture distrubution in the domain for each time step" <<endl;
+    cout << "Soving for temperature distrubution in the domain for each time step" <<endl;
     
     // Soving for dT/dt+vx*dT/dx+vy*dT/dy=kappa*(d2T/dx2+d2T/dy2)
     // Composing matrix of coefficients mat()
@@ -189,11 +180,11 @@ int main(int argc, char* argv[])
     }
     
     //generate output file in .vts format
-
+    
     string dirname;
     double time_step;
 
-    write_vts(dirname, dx, dy, xe, ye, time_step, nx, ny, T1, vx, vy);
+//    write_vts(dirname, dx, dy, xe, ye, time_step, nx, ny, T1, vx, vy, total_time);
 
     std::cout << "Program runing time: "<<float( clock () - t1 ) / CLOCKS_PER_SEC<< endl;
     
