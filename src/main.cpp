@@ -97,8 +97,13 @@ int main(int argc, char* argv[]) {
     
     // Calculate horizontal velocity for each mesh grid in the domain based on input and boundary condition
     set_horizontal_velocity (rho_m, dx, dy, vx, &params);
-    set_vertical_velocity (rho_m, dx, dy, vx, &params);
+    set_vertical_velocity (rho_m, dx, dy, vy, &params);
     
+    for (int i = 0; i < params.ny ; i++) {
+        for (int j = 0; j < params.nx ; j++) {
+            cout << gsl_matrix_get(vy, i, j) << endl;
+        }
+    }
     //Calculates stable iteration time step based on the user input
     
     cout << "Calculating stable iteration time step based input" << endl;
@@ -117,16 +122,11 @@ int main(int argc, char* argv[]) {
     // Process all grid points for Implicit Solving
     
     if (params.simul_type == "IMPLICIT") {
-    implicit_T1 (To, T1, dx, dy, vx, vy, dt, &params,X,Y);
+        implicit_T1 (To, T1, dx, dy, vx, vy, dt, &params,X,Y);
     } 
     else {
-    explicit_T1 (To, T1, dx, dy, vx, vy, dt, &params, X, Y);
+        explicit_T1 (To, T1, dx, dy, vx, vy, dt, &params, X, Y);
     }
-
-    //generate output file in .vts format
-
-    //write_vts(params.output_path, params.total_time, params.output_fre, 
-    //    X, Y, params.nx, params.ny, T1, vx, vy);
 
     std::cout << "Program runing time: "<<float( clock () - t1 ) / CLOCKS_PER_SEC<< endl;
     

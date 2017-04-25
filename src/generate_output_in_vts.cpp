@@ -15,11 +15,11 @@ std::string to_string(int i) {
     return ss.str();
 }
 
-void write_vts(string dirname, double freq,  int** X, int** Y, double t,
+void write_vts(string dirname, int** X, int** Y, double t,
               int nx, int ny, gsl_matrix* T, gsl_matrix* Vx, gsl_matrix* Vy) { 
 
     // Create output filename based on time step
-    string fname = "fields." + to_string(t * freq) + ".vts";
+    string fname = "fields." + to_string(t) + ".vts";
 
     cout << "Writing output file for current time step" << fname << endl;
 

@@ -148,11 +148,11 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
     int f = round(freq);
 
     if (t % f == 0 || t == 1) {    
-        write_vts(output_path, freq, X, Y, t, nx, ny, T1, vx, vy);
+        write_vts(output_path, X, Y, t, nx, ny, T1, vx, vy);
     }
 
     // copy values of old time step into new
-    int gsl_matrix_memcpy (gsl_matrix * To, const gsl_matrix * T1);
+    int gsl_matrix_memcpy (gsl_matrix * To, gsl_matrix * T1);
     }
 }
 
@@ -260,7 +260,7 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
     int f = round(freq);
 
     if (t % f == 0 || t == 1) {    
-        write_vts(output_path, freq, X, Y, t, nx, ny, T1exp, vx, vy);
+        write_vts(output_path, X, Y, t, nx, ny, T1exp, vx, vy);
     }
     // copy values of old time step into new
     int gsl_matrix_memcpy (gsl_matrix * Toexp, const gsl_matrix * T1exp);
