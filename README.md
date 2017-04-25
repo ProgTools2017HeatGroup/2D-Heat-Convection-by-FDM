@@ -6,8 +6,7 @@ This code is for solving heat convection in a 2D rectangular box using finite di
 To build form the source code:
 1. Download the source package
 2. install GSL libarary, for example, in Ubuntu, you can use sudo apt-get install libgs10-dev libgsl0ldbl to install it
-3. Before "make", you should go to the ./src subdirectory and edit "Makefile" to change the gsl library location to where you installed it
-   for example, change GSLFLAGS = -I/usr/include/gsl to -I/...your path.../gsl/include; change LDFLAGS = -L/usr/lib to -L/...your path.../gsl/lib     
+3. Before "make", you should go to the ./src subdirectory and edit "Makefile" to change the gsl library location to where you installed it. For example, change GSLFLAGS = -I/usr/include/gsl to -I/...your path.../gsl/include; change LDFLAGS = -L/usr/lib to -L/...your path.../gsl/lib     
 4. Under the parent directory, run "make" to build the code
 
 Runing code
