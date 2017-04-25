@@ -3,11 +3,13 @@
 #include <gsl/gsl_linalg.h>
 #include <math.h>
 #include <cassert>
+#include <string>
 #include "calculate_temperature.h"
 #include "structs.h"
+#include "generate_output_in_vts.h"
 
 void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matrix* vx, gsl_matrix* vy, 
-                  double dt, Parameters *params) {
+                  double dt, Parameters *params, int** X, int **Y) {
     
     int nx = params->nx;
     int ny = params->ny;
@@ -21,6 +23,8 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
     double top_temp = params->temp_top;
     double bottom_temp = params->temp_bottom;
     double total_time = params->total_time;
+    string output_path = params->output_path;
+    double freq = round(params->output_fre);
 
     int tnum = round(total_time/dt); // number of time steps
     for (int t = 1; t <= tnum; t++) {
@@ -140,13 +144,20 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
         }
     gsl_matrix_free (mat);
     gsl_vector_free (b);
+              
+    int f = round(freq);
+
+    if (t % f == 0 || t == 1) {    
+        write_vts(output_path, freq, X, Y, t, nx, ny, T1, vx, vy);
+    }
+
     // copy values of old time step into new
     int gsl_matrix_memcpy (gsl_matrix * To, const gsl_matrix * T1);
     }
 }
 
 void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gsl_matrix* vx, 
-                  gsl_matrix* vy, double dt, Parameters *params) {
+                  gsl_matrix* vy, double dt, Parameters *params, int** X, int **Y) {
     
     int nx = params->nx;
     int ny = params->ny;
@@ -160,6 +171,8 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
     double top_temp = params->temp_top;
     double bottom_temp = params->temp_bottom;
     double total_time = params->total_time;
+    string output_path = params->output_path;
+    double freq = params->output_fre;
 
     int tnum = round(total_time/dt); // number of time steps
 
@@ -243,7 +256,12 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
         gsl_vector_free (T_col);
         gsl_matrix_free (mat);
         gsl_vector_free (b);
+    
+    int f = round(freq);
 
+    if (t % f == 0 || t == 1) {    
+        write_vts(output_path, freq, X, Y, t, nx, ny, T1exp, vx, vy);
+    }
     // copy values of old time step into new
     int gsl_matrix_memcpy (gsl_matrix * Toexp, const gsl_matrix * T1exp);
     }

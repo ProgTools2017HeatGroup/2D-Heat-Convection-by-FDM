@@ -117,16 +117,16 @@ int main(int argc, char* argv[]) {
     // Process all grid points for Implicit Solving
     
     if (params.simul_type == "IMPLICIT") {
-    implicit_T1 (To, T1, dx, dy, vx, vy, dt, &params);
+    implicit_T1 (To, T1, dx, dy, vx, vy, dt, &params,X,Y);
     } 
     else {
-    explicit_T1 (To, T1, dx, dy, vx, vy, dt, &params);
+    explicit_T1 (To, T1, dx, dy, vx, vy, dt, &params, X, Y);
     }
 
     //generate output file in .vts format
 
-    write_vts(params.output_path, params.total_time, params.output_fre, 
-        X, Y, params.nx, params.ny, T1, vx, vy);
+    //write_vts(params.output_path, params.total_time, params.output_fre, 
+    //    X, Y, params.nx, params.ny, T1, vx, vy);
 
     std::cout << "Program runing time: "<<float( clock () - t1 ) / CLOCKS_PER_SEC<< endl;
     
@@ -136,4 +136,6 @@ int main(int argc, char* argv[]) {
     gsl_matrix_free (vx);
     gsl_matrix_free (vy);
     gsl_matrix_free (rho_m);
+    delete[] X;
+    delete[] Y;
 }

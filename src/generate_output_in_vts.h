@@ -1,3 +1,6 @@
+#ifndef OUTPUT_VTS
+#define OUTPUT_VTS
+
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -7,5 +10,6 @@
 using namespace std;
 
 
-int write_vts(string dirname, double total_time, double freq,  int** X, int** Y,
+void write_vts(string dirname, double freq,  int** X, int** Y, double t,
               int nx, int ny, gsl_matrix* T, gsl_matrix* Vx, gsl_matrix* Vy);
+#endif
