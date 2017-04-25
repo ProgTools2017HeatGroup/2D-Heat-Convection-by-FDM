@@ -4,12 +4,24 @@
 #include <math.h>
 #include <cassert>
 #include "calculate_temperature.h"
+#include "structs.h"
 
-void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double kappa, double dt, int left_condition,
-                int right_condition, int top_condition, int bottom_condition, double left_temp, gsl_matrix* T1,
-                double right_temp, double top_temp, double bottom_temp, float total_time,
-                gsl_matrix* vx, gsl_matrix* vy) {
+void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matrix* vx, gsl_matrix* vy, 
+                  double dt, Parameters *params) {
     
+    int nx = params->nx;
+    int ny = params->ny;
+    double kappa = params->diff;
+    int left_condition = params->left_condition;
+    int right_condition = params->right_condition;
+    int top_condition = params->top_condition;
+    int bottom_condition = params->bottom_condition;
+    double left_temp = params->temp_left;
+    double right_temp = params->temp_right;
+    double top_temp = params->temp_top;
+    double bottom_temp = params->temp_bottom;
+    double total_time = params->total_time;
+
     int tnum = round(total_time/dt); // number of time steps
     for (int t = 1; t <= tnum; t++) {
         // Allocate  matrix A in Ax = b
@@ -133,11 +145,22 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
     }
 }
 
-void explicit_T1 (gsl_matrix* Toexp, int nx, int ny, double dx, double dy, double kappa, double dt, int left_condition,
-                int right_condition, int top_condition, int bottom_condition, double left_temp, gsl_matrix* T1exp,
-                double right_temp, double top_temp, double bottom_temp, float total_time,
-                gsl_matrix* vx, gsl_matrix* vy) {
+void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gsl_matrix* vx, 
+                  gsl_matrix* vy, double dt, Parameters *params) {
     
+    int nx = params->nx;
+    int ny = params->ny;
+    double kappa = params->diff;
+    int left_condition = params->left_condition;
+    int right_condition = params->right_condition;
+    int top_condition = params->top_condition;
+    int bottom_condition = params->bottom_condition;
+    double left_temp = params->temp_left;
+    double right_temp = params->temp_right;
+    double top_temp = params->temp_top;
+    double bottom_temp = params->temp_bottom;
+    double total_time = params->total_time;
+
     int tnum = round(total_time/dt); // number of time steps
 
     for (int t = 1; t <= tnum; t++) {

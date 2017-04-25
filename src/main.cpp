@@ -59,57 +59,55 @@ int main(int argc, char* argv[]) {
 
     //Write input value to logfile
     write_logfile(logfile, &params);
+    
+    // get grid spacing to be used in later programs
+    double dy = params.ye/(params.ny-1);
+    double dx = params.xe/(params.nx-1);
 
     // get points in X and Y direction for printing in output
-    int** X = generate_x_points (xe, ye, nx, ny);
-    int** Y = generate_y_points (xe, ye, nx, ny);
-     get grid spacing to be used in later programs
-    double dy = ye/(ny-1);
-    double dx = xe/(nx-1);
+    int** X = generate_x_points (params.nx, params.ny, dx);
+    int** Y = generate_y_points (params.nx, params.ny, dy);
     
     // allocate memory for initial temperature
-    gsl_matrix* To = gsl_matrix_alloc(ny,nx);
+    gsl_matrix* To = gsl_matrix_alloc(params.ny,params.nx);
 
-    set_back_value (To, ny, nx, Temp);
+    set_back_value (To, params.ny, params.nx, params.Temp);
 
-
-    if (pert_type == "BOX") {
-        set_box (To, dx, dy, length, width, xo, yo, pert_T, xe, ye);
+    if (params.pert_type == "BOX") {
+        set_box (To, dx, dy, &params);
         
-    } else if (pert_type == "DISK") {
-        set_disk (To, dx, dy, radius, xo, yo, pert_T, xe, ye);
+    } else if (params.pert_type == "DISK") {
+        set_disk (To, dx, dy, &params);
     }
     
-    else if (pert_type == "GAUSSIAN") {
-        set_gaussian (To, dx, dy, sigma, xo, yo, pert_T, xe, ye);
+    else if (params.pert_type == "GAUSSIAN") {
+        set_gaussian (To, dx, dy, &params);
     }
 
     // allocate memory for modified density
-    gsl_matrix* rho_m = gsl_matrix_alloc(ny,nx);
-    set_density (To, rho_m, pert_T, expa, rho, nx, ny);
+    gsl_matrix* rho_m = gsl_matrix_alloc(params.ny,params.nx);
+    set_density (To, rho_m, &params);
  
 
     // allocate memory for velocities
-    gsl_matrix* vx = gsl_matrix_alloc(ny,nx);
-    gsl_matrix* vy = gsl_matrix_alloc(ny,nx);
+    gsl_matrix* vx = gsl_matrix_alloc(params.ny,params.nx);
+    gsl_matrix* vy = gsl_matrix_alloc(params.ny,params.nx);
     
     cout << "Generating velocity field" << endl;
     
     // Calculate horizontal velocity for each mesh grid in the domain based on input and boundary condition
-    set_horizontal_velocity (rho_m, nx, ny, vis, dx, dy, left_con, right_con, top_con, bottom_con, velo_left, 
-            velo_right,  velo_top,  velo_bottom, vx);
-    set_vertical_velocity (rho_m, nx, ny, vis, dx, dy, left_con, right_con, top_con, bottom_con, velo_left, 
-            velo_right,  velo_top,  velo_bottom, vy);
+    set_horizontal_velocity (rho_m, dx, dy, vx, &params);
+    set_vertical_velocity (rho_m, dx, dy, vx, &params);
     
     //Calculates stable iteration time step based on the user input
     
     cout << "Calculating stable iteration time step based input" << endl;
     
-    double dt = stable_time (diff, vx, vy, dx, dy);
+    double dt = stable_time (params.pert_T, vx, vy, dx, dy);
     cout << dt << endl;
 
     // allocate memory for initial temperature
-    gsl_matrix* T1 = gsl_matrix_alloc(ny,nx);
+    gsl_matrix* T1 = gsl_matrix_alloc(params.ny, params.nx);
     
     cout << "Soving for temperature distrubution in the domain for each time step" <<endl;
     
@@ -118,27 +116,17 @@ int main(int argc, char* argv[]) {
     // and vector (column) of right parts b()
     // Process all grid points for Implicit Solving
     
-    if (simul_type == "IMPLICIT") {
-    implicit_T1 (To, nx, ny, dx, dy, diff, dt, left_condition, right_condition, top_condition, 
-                bottom_condition, temp_left, T1, temp_right, temp_top, temp_bottom, total_time,
-                vx, vy);
+    if (params.simul_type == "IMPLICIT") {
+    implicit_T1 (To, T1, dx, dy, vx, vy, dt, &params);
     } 
     else {
-    explicit_T1 (To, nx, ny, dx, dy, diff , dt, left_condition, right_condition, top_condition, 
-                bottom_condition, temp_left , T1, temp_right, temp_top, temp_bottom, total_time,
-                vx, vy);
+    explicit_T1 (To, T1, dx, dy, vx, vy, dt, &params);
     }
-    for (int i =0; i<ny; i++) {
-        for (int j = 0; j < nx; j++) {
-        cout << gsl_matrix_get (T1, i, j)<< endl;
-       }
-    }
+
     //generate output file in .vts format
-    
-    string dirname;
-    
-    write_vts(dirname, total_time, output_fre, X, Y,
-            nx, ny, T1, vx, vy);
+
+    write_vts(params.output_path, params.total_time, params.output_fre, 
+        X, Y, params.nx, params.ny, T1, vx, vy);
 
     std::cout << "Program runing time: "<<float( clock () - t1 ) / CLOCKS_PER_SEC<< endl;
     

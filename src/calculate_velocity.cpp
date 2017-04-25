@@ -2,6 +2,7 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_linalg.h>
 #include "calculate_velocity.h"
+#include "structs.h"
 
 // Solving Poisson equation for vorticity  d2OMEGA/dx2+d2OMEGA/dy2=gy*dRHO/dx
 // Composing matrix of coefficients A()  and vector (column) of right parts b()
@@ -53,7 +54,6 @@ void set_omega (gsl_matrix* rho, gsl_vector* x, int nx, int ny, double eta, doub
 void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double dy, string left_condition,
                 string right_condition, string top_condition, string bottom_condition, double left_velocity,
                 double right_velocity, double top_velocity, double bottom_velocity) {
-    
     int s;
     // Allocate  matrix A in Ax = b
     gsl_matrix* A = gsl_matrix_alloc (ny*nx, ny*nx);
@@ -129,9 +129,19 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
     gsl_permutation_free (p);
 }
 
-void set_horizontal_velocity (gsl_matrix* rho, int nx, int ny, double eta, double dx, double dy, string left_condition,
-                string right_condition, string top_condition, string bottom_condition, double left_velocity,
-                double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* horizontal_velocity) {
+void set_horizontal_velocity (gsl_matrix* rho,  double dx, double dy, gsl_matrix* horizontal_velocity, Parameters *params) {
+
+    int nx = params->nx;
+    int ny = params->ny;
+    double eta = params->vis;
+    string left_condition = params->left_con;
+    string right_condition = params->right_con;
+    string top_condition = params->top_con;
+    string bottom_condition = params->bottom_con;
+    double left_velocity = params->velo_left;
+    double right_velocity = params->velo_right;
+    double top_velocity = params->velo_top;
+    double bottom_velocity = params->velo_bottom;
     
     gsl_vector *x = gsl_vector_alloc (ny*nx);
     set_omega (rho, x, nx, ny, eta, dx, dy);
@@ -160,10 +170,20 @@ void set_horizontal_velocity (gsl_matrix* rho, int nx, int ny, double eta, doubl
     gsl_matrix_free (psi);
 }
 
-void set_vertical_velocity (gsl_matrix* rho, int nx, int ny, double eta, double dx, double dy, string left_condition,
-                string right_condition, string top_condition, string bottom_condition, double left_velocity,
-                double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* vertical_velocity) {
+void set_vertical_velocity (gsl_matrix* rho,  double dx, double dy, gsl_matrix* vertical_velocity, Parameters *params) {
     
+    int nx = params->nx;
+    int ny = params->ny;
+    double eta = params->vis;
+    string left_condition = params->left_con;
+    string right_condition = params->right_con;
+    string top_condition = params->top_con;
+    string bottom_condition = params->bottom_con;
+    double left_velocity = params->velo_left;
+    double right_velocity = params->velo_right;
+    double top_velocity = params->velo_top;
+    double bottom_velocity = params->velo_bottom;
+
     gsl_vector *x = gsl_vector_alloc (ny*nx);
     set_omega (rho,  x, nx, ny, eta, dx, dy);
     gsl_matrix* psi = gsl_matrix_alloc (ny, nx);

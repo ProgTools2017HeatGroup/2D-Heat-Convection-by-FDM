@@ -3,6 +3,7 @@
 #include <string>
 #include <gsl/gsl_matrix.h>
 #include "initial_temp.h"
+#include "structs.h"
 
 #define PI 3.14159265
 
@@ -22,8 +23,15 @@ void set_back_value (gsl_matrix* field_in, int ny_in, int nx_in, double back) {
 * perturb represents the temperature of the perturbation and other
 * variables corresponds to their geometries.
 */
-void set_box (gsl_matrix* field_in, double dx, double dy, double length, double height,
-              double coord_x, double coord_y, double perturb, double x_extent, double y_extent) {
+void set_box (gsl_matrix* field_in, double dx, double dy, Parameters *params) {
+
+    double length = params->length;
+    double height = params->width;
+    double perturb = params->pert_T;
+    int x_extent = params->xe;
+    int y_extent = params->ye;
+    int coord_x = params->xo;
+    int coord_y = params->yo;
 
     assert(length >= 0 && height >= 0 && coord_x >= 0 && coord_y >=0 && perturb >=0);
     assert((length+coord_x)/2  < x_extent/2 && (height+coord_y)/2 < y_extent/2);
@@ -36,8 +44,14 @@ void set_box (gsl_matrix* field_in, double dx, double dy, double length, double 
 
 }
 
-void set_disk (gsl_matrix* field_in, double dx, double dy, double radius, double coord_x,
-               double coord_y, double perturb, double x_extent, double y_extent) {
+void set_disk (gsl_matrix* field_in, double dx, double dy, Parameters *params) {
+
+    double radius = params->radius;
+    double perturb = params->pert_T;
+    int x_extent = params->xe;
+    int y_extent = params->ye;
+    int coord_x = params->xo;
+    int coord_y = params->yo;
 
     assert(radius >= 0 && coord_x >= 0 && coord_y >=0 && perturb >= 0);
     assert((radius+coord_x)/2 < x_extent/2 && (radius+coord_y)/2 < y_extent/2);
@@ -54,8 +68,14 @@ void set_disk (gsl_matrix* field_in, double dx, double dy, double radius, double
 
 }
 
-void set_gaussian (gsl_matrix* field_in,  double dx, double dy, double sigma, double coord_x,
-                   double coord_y, double perturb, double x_extent, double y_extent) {
+void set_gaussian (gsl_matrix* field_in, double dx, double dy, Parameters *params) {
+
+    double sigma = params->sigma;
+    double perturb = params->pert_T;
+    int x_extent = params->xe;
+    int y_extent = params->ye;
+    int coord_x = params->xo;
+    int coord_y = params->yo;
 
     assert(sigma >=0 && coord_x >= 0 && coord_y >= 0 && perturb >=0);
     assert((coord_x + sigma)/2 < x_extent/2 && (1/dy + coord_y < y_extent/2));
