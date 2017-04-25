@@ -2,7 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
-#include <direct.h>
+#include <sys/stat.h>
 #include <gsl/gsl_matrix.h>
 using namespace std;
 
@@ -16,7 +16,7 @@ std::string to_string(int i)
     return ss.str();
 }
 
-int write_vts(string dirname, double dx, double dy, double x_ext, double y_ext, int time_step,
+int write_vts(string dirname, double dx, double dy, double x_ext, double y_ext,double total_time, int time_step,
               int nx, int ny, gsl_matrix* T, gsl_matrix* Vx, gsl_matrix* Vy, double output_freq) {
 
     //Loop over each time step with the big code below to generate a .vts file for each time step
@@ -30,7 +30,7 @@ for (int t=1; t<total_time; t+= output_freq) {
     cout << "Writing output file for current time step" << fname << endl;
     
     // Create output directory for outfile.
-    mkdir(dirname.c_str());
+    mkdir(dirname.c_str(),S_IRWXU);
     string fullpath = dirname + fname;
     
     // Create output file.
