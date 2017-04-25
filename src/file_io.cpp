@@ -93,6 +93,7 @@ int store_params(vector<string> &str, Parameters *params)
         pass_vari(str, i, "total_time", &params->total_time);
         pass_vari(str, i, "output_frequency", &params->output_fre);
         pass_vari(str, i, "simulation_type", &params->simul_type);
+        pass_vari(str, i, "output_path", &params->output_path);
 
         if (pass_vari(str, i, "density", &params->rho) && check_vari(params->rho, 0))  print_error();
         if (pass_vari(str, i, "viscosity", &params->vis) && check_vari(params->vis, 0)) print_error();
@@ -215,6 +216,7 @@ int write_logfile(char* args, Parameters *params)
     logfile << "total_time =\n" << scientific << params->total_time << endl;
     logfile << "output_frequency =\n" << scientific << params->output_fre << endl;
     logfile << "simulation_type =\n" << params->simul_type << endl;
+    logfile << "output_path=\n" << params->output_path << endl;
     //    int j, k;
     //    logfile << "Temperature =\n";
     //    for (j = 0; j < *params->nx; j = j + 1)
