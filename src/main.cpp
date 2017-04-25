@@ -45,8 +45,8 @@ int main(int argc, char* argv[])
     char *infile, *logfile;
 
     while ((opt = getopt(argc, argv, "i:o:hv")) != -1) {
-        switch (opt)
-    
+        switch (opt) {
+                
         case 'h':
             cout << "usage: " << argv[0] << " [OPTIONS][-i] INPUTFILENAME;[-o] LOGFILENAME;[-h] HELP;[-v] VERSION" << endl;
             break;
@@ -84,6 +84,7 @@ int main(int argc, char* argv[])
             }
         default:
             abort();
+        }
     }
 
 //    check_infile(argc);
