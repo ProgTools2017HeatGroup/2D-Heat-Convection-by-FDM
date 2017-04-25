@@ -8,8 +8,8 @@
 void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double kappa, double dt, int left_condition,
                 int right_condition, int top_condition, int bottom_condition, double left_temp, gsl_matrix* T1,
                 double right_temp, double top_temp, double bottom_temp, float total_time,
-                gsl_matrix* vx, gsl_matrix* vy) {
-
+                gsl_matrix* vx, gsl_matrix* vy) 
+{
     int tnum = round(total_time/dt); // number of time steps
 
     for (int t = 1; t <= tnum; t++) {
@@ -132,8 +132,8 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
 void explicit_T1 (gsl_matrix* Toexp, int nx, int ny, double dx, double dy, double kappa, double dt, int left_condition,
                 int right_condition, int top_condition, int bottom_condition, double left_temp, gsl_matrix* T1exp,
                 double right_temp, double top_temp, double bottom_temp, float total_time,
-                gsl_matrix* vx, gsl_matrix* vy) {
-
+                gsl_matrix* vx, gsl_matrix* vy) 
+{
     int tnum = round(total_time/dt); // number of time steps
 
     enum type{
