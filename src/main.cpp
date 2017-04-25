@@ -15,6 +15,7 @@
 #include "initial_temp.h"
 #include "file_io.h"
 #include "utility.h"
+#include "structs.h"
 #include "set_density.h"
 //#include "boundary.h"
 #include "calculate_temperature.h"
@@ -41,86 +42,29 @@ int main(int argc, char* argv[])
     //simple timing function
     clock_t t1 = clock();  
 
-    int opt;
     char *infile, *logfile;
 
-    while ((opt = getopt(argc, argv, "i:o:hv")) != -1) {
-        switch (opt) {
-                
-        case 'h':
-            cout << "usage: " << argv[0] << " [OPTIONS][-i] INPUTFILENAME;[-o] LOGFILENAME;[-h] HELP;[-v] VERSION" << endl;
-            break;
-        case 'v':
-            cout << argv[0] << ": Solve 2D-heat-convection using finite differences method --ver1.00" << endl;
-            break;
-        case 'i':
-            infile = optarg;
-//            cout << "Inputfile is " << infile << endl;
-//            if (strcmp(argv[optind+2], "-o") != 0)
-//            {
-//                cout << "Missing logfile option" << endl;
-//                exit(EXIT_FAILURE);
-//            }
-            break;
-        case 'o':
-            logfile = optarg;
-            cout << "Logfile is " << logfile << endl;
-            break;
-        case '?':
-            if (optopt == 'i') {
-            
-                cout << "Missing inputfile option" <<endl;
-                exit(EXIT_FAILURE);
-            }
-            else if (optopt == 'o') {
-            
-                cout << "Missing logfile option" << endl;
-                exit(EXIT_FAILURE);
-            }
-            else {
-            
-                cout << "Unknown option" << endl;
-                exit(EXIT_FAILURE);
-            }
-        default:
-            abort();
-        }
-    }
+    check_argu(argc, argv, &infile, &logfile);
 
-//    check_infile(argc);
-
-    double rho, vis, diff, expa;
-    int  xe, ye, nx, ny;
-//    double **P, **T, **Vx, **Vy;
-    string left_con, right_con, bottom_con, top_con, pert_type, simul_type;
-    int left_condition, right_condition, bottom_condition, top_condition;
-    double temp_left, temp_right, temp_bottom, temp_top, Temp;
-    double velo_left, velo_right, velo_bottom, velo_top, total_time, output_fre;
-    double xo, yo, pert_T, length, width, radius, sigma;
+    Parameters params;
     vector<string> str;
- 
+
     read_infile(infile, str);
-    
+
     cout << "Storing input value" << endl;
-    
+
     //Store input parameter value
-    store_params(str, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &left_con, &right_con, &bottom_con, &top_con,
-        &left_condition, &right_condition, &bottom_condition, &top_condition, &temp_left, &temp_right, &temp_bottom,
-        &temp_top, &velo_left, &velo_right, &velo_bottom, &velo_top, &Temp, &pert_type, &xo, &yo, &pert_T, &length,
-        &width, &radius, &sigma, &total_time, &output_fre, &simul_type);
-    
+    store_params(str, &params);
+
     cout << "generating input logfile" << endl;
-    
+
     //Write input value to logfile
-    write_logfile(logfile, &rho, &vis, &diff, &expa, &xe, &ye, &nx, &ny, &left_con, &right_con, &bottom_con, &top_con,
-        &left_condition, &right_condition, &bottom_condition, &top_condition, &temp_left, &temp_right, &temp_bottom,
-        &temp_top, &velo_left, &velo_right, &velo_bottom, &velo_top, &Temp, &pert_type, &xo, &yo, &pert_T, &length,
-        &width, &radius, &sigma, &total_time, &output_fre, &simul_type);
+    write_logfile(logfile, &params);
 
     // get points in X and Y direction for printing in output
-//    int** X = generate_x_points (xe, ye, nx, ny);
- //   int** Y = generate_y_points (xe, ye, nx, ny);
-    // get grid spacing to be used in later programs
+    int** X = generate_x_points (xe, ye, nx, ny);
+    int** Y = generate_y_points (xe, ye, nx, ny);
+     get grid spacing to be used in later programs
     double dy = ye/(ny-1);
     double dx = xe/(nx-1);
     
