@@ -32,8 +32,8 @@ using std::scientific;
 * Return     EXIT_FAILURE when input file is nonexistent or cannot be opened.
 */
 
-int read_infile(char* args, vector<string> &str)
-{
+int read_infile(char* args, vector<string> &str) {
+    
     int i = 0;
     string s;
     ifstream infile;
@@ -68,11 +68,11 @@ int read_infile(char* args, vector<string> &str)
 * Return    EXIT_FAILURE when the value of parameter is unreasonable.
 */
 
-int store_params(vector<string> &str, Parameters *params)
-{
+int store_params(vector<string> &str, Parameters *params) {
+    
     size_t i = 0;
-    while (i<str.size())
-    {
+    while (i<str.size()) {
+        
         pass_vari(str, i, "expansion_coefficient", &params->expa);
         pass_vari(str, i, "temp_left_value", &params->temp_left);
         pass_vari(str, i, "temp_right_value", &params->temp_right);
@@ -103,40 +103,40 @@ int store_params(vector<string> &str, Parameters *params)
         if (pass_vari(str, i, "nx", &params->nx) && check_vari(params->nx, 0)) print_error();
         if (pass_vari(str, i, "ny", &params->ny) && check_vari(params->ny, 0)) print_error();
 
-        if (pass_vari(str, i, "left_condition", &params->left_con))
-        {
+        if (pass_vari(str, i, "left_condition", &params->left_con)) {
+            
             if (check_vari(params->left_con, "NO_SLIP") && check_vari(params->left_con, "FREE_SLIP"))  print_error();
         }
-        if (pass_vari(str, i, "right_condition", &params->right_con))
-        {
+        if (pass_vari(str, i, "right_condition", &params->right_con)) {
+            
             if (check_vari(params->right_con, "NO_SLIP") && check_vari(params->right_con, "FREE_SLIP"))  print_error();
         }
-        if (pass_vari(str, i, "bottom_condition", &params->bottom_con))
-        {
+        if (pass_vari(str, i, "bottom_condition", &params->bottom_con)) {
+            
             if (check_vari(params->bottom_con, "NO_SLIP") && check_vari(params->bottom_con, "FREE_SLIP"))  print_error();
         }
-        if (pass_vari(str, i, "top_condition", &params->top_con))
-        {
+        if (pass_vari(str, i, "top_condition", &params->top_con)) {
+            
             if (check_vari(params->top_con, "NO_SLIP") && check_vari(params->top_con, "FREE_SLIP"))  print_error();
         }
-        if (pass_vari(str, i, "temp_left_condition", &params->left_condition))
-        {
+        if (pass_vari(str, i, "temp_left_condition", &params->left_condition)) {
+            
             if (check_vari(params->left_condition, 0) || !check_vari(params->left_condition, 2)) print_error();
         }
-        if (pass_vari(str, i, "temp_right_condition", &params->right_condition))
-        {
+        if (pass_vari(str, i, "temp_right_condition", &params->right_condition)) {
+            
             if (check_vari(params->right_condition, 0) || !check_vari(params->right_condition, 2)) print_error();
         }
-        if (pass_vari(str, i, "temp_bottom_condition", &params->bottom_condition))
-        {
+        if (pass_vari(str, i, "temp_bottom_condition", &params->bottom_condition)) {
+            
             if (check_vari(params->bottom_condition, 0) || !check_vari(params->bottom_condition, 2)) print_error();
         }
-        if (pass_vari(str, i, "temp_top_condition", &params->top_condition))
-        {
+        if (pass_vari(str, i, "temp_top_condition", &params->top_condition)) {
+            
             if (check_vari(params->top_condition, 0) || !check_vari(params->top_condition, 2)) print_error();
         }
-        if (pass_vari(str, i, "perturbation_type", &params->pert_type))
-        {
+        if (pass_vari(str, i, "perturbation_type", &params->pert_type)) {
+            
             if (check_vari(params->pert_type, "BOX") && check_vari(params->pert_type, "DISK")
                 && check_vari(params->pert_type, "GAUSSIAN"))   print_error();
         }
@@ -159,8 +159,8 @@ int store_params(vector<string> &str, Parameters *params)
 *
 */
 
-int write_logfile(char* args, Parameters *params)
-{
+int write_logfile(char* args, Parameters *params) {
+    
     ofstream logfile;
     logfile.open(args);
     logfile << "density =\n" << scientific << params->rho << endl;
@@ -190,23 +190,23 @@ int write_logfile(char* args, Parameters *params)
     logfile << "Temp =\n" << scientific << params->Temp << endl;
     logfile << "perturbation_type =\n" << params->pert_type << endl;
 
-    if (params->pert_type == "BOX")
-    {
+    if (params->pert_type == "BOX") {
+        
         logfile << "xo =\n" << scientific << params->xo << endl;
         logfile << "yo =\n" << scientific << params->yo << endl;
         logfile << "length =\n" << scientific << params->length << endl;
         logfile << "width =\n" << scientific << params->width << endl;
         logfile << "perturbation_T =\n" << scientific << params->pert_T << endl;
     }
-    else if (params->pert_type == "DISK")
-    {
+    else if (params->pert_type == "DISK") {
+        
         logfile << "xo =\n" << scientific << params->xo << endl;
         logfile << "yo =\n" << scientific << params->yo << endl;
         logfile << "radius =\n" << scientific << params->radius << endl;
         logfile << "perturbation_T =\n" << scientific << params->pert_T << endl;
     }
-    else if (params->pert_type == "GAUSSIAN")
-    {
+    else if (params->pert_type == "GAUSSIAN") {
+        
         logfile << "xo =\n" << scientific << params->xo << endl;
         logfile << "yo =\n" << scientific << params->yo << endl;
         logfile << "sigma =\n" << scientific << params->sigma << endl;

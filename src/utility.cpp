@@ -31,13 +31,13 @@ using std::scientific;
 * Return     EXIT_FAILURE when missing inputfile, logfile or unknown options.
 */
 
-void check_argu(int argc, char *argv[], char **infile, char **logfile)
-{
+void check_argu(int argc, char *argv[], char **infile, char **logfile) {
+    
     int opt;
 
     while ((opt = getopt(argc, argv, "i:o:hv")) != -1)
-        switch (opt)
-    {
+        switch (opt) {
+            
         case 'h':
             cout << "usage: " << argv[0] << " [OPTIONS][-i] INPUTFILENAME;[-o] LOGFILENAME;[-h] HELP;[-v] VERSION" << endl;
             break;
@@ -53,26 +53,26 @@ void check_argu(int argc, char *argv[], char **infile, char **logfile)
             cout << "Logfile is " << *logfile << endl;
             break;
         case '?':
-            if (optopt == 'i')
-            {
+            if (optopt == 'i') {
+                
                 cout << "Missing inputfile option" << endl;
                 exit(EXIT_FAILURE);
             }
-            else if (optopt == 'o')
-            {
+            else if (optopt == 'o') {
+                
                 cout << "Missing logfile option" << endl;
                 exit(EXIT_FAILURE);
             }
-            else
-            {
+            else {
+                
                 cout << "Unknown option" << endl;
                 exit(EXIT_FAILURE);
             }
         default:
             abort();
     }
-    if (*logfile == NULL)
-    {
+    if (*logfile == NULL) {
+        
         cout << "Missing logfile, please check" << endl;
         exit(EXIT_FAILURE);
     }
@@ -88,8 +88,7 @@ void check_argu(int argc, char *argv[], char **infile, char **logfile)
 *
 */
 
-int read_vari(vector<string> &str, int i, double &double_value)
-{
+int read_vari(vector<string> &str, int i, double &double_value) {
 
     cout << str[i] << "\t=" << endl;
 
@@ -112,8 +111,7 @@ int read_vari(vector<string> &str, int i, double &double_value)
 *
 */
 
-int read_vari(vector<string> &str, int i, int &int_value)
-{
+int read_vari(vector<string> &str, int i, int &int_value) {
 
     cout << str[i] << "\t=" << endl;
   
@@ -135,8 +133,7 @@ int read_vari(vector<string> &str, int i, int &int_value)
 *
 */
 
-int read_vari(vector<string> &str, int i, string &string_value)
-{
+int read_vari(vector<string> &str, int i, string &string_value) {
 
     cout << str[i] << "\t=" << endl;
     string_value = str[i + 2];
@@ -155,16 +152,15 @@ int read_vari(vector<string> &str, int i, string &string_value)
 *
 */
 
-int read_vari(vector<string> &str, int i, double ***matr, int *nx, int *ny)
-{
+int read_vari(vector<string> &str, int i, double ***matr, int *nx, int *ny) {
 
     cout << str[i] << "\t=" << endl;
     int j, k;
     char* c;
-    for (j = 0; j < *nx; j = j + 1)
-    {
-        for (k = 0; k < *ny; k = k + 1)
-        {
+    for (j = 0; j < *nx; j = j + 1) {
+        
+        for (k = 0; k < *ny; k = k + 1) {
+            
             c = const_cast<char*>(str[i + 2].c_str());
             sscanf(c, "%lf", &(*matr)[j][k]);
             cout << scientific << (*matr)[j][k] << "\t";
@@ -189,14 +185,14 @@ int read_vari(vector<string> &str, int i, double ***matr, int *nx, int *ny)
 *
 */
 
-int check_vari(double &vari_double, double threshold)
-{
-    if (vari_double >= threshold)
-    {
+int check_vari(double &vari_double, double threshold) {
+    
+    if (vari_double >= threshold) {
+        
         return 0;
     }
-    else
-    {
+    else {
+        
         return 1;
     }
 }
@@ -213,14 +209,14 @@ int check_vari(double &vari_double, double threshold)
 *
 */
 
-int check_vari(int &vari_int, int threshold)
-{
-    if (vari_int >= threshold)
-    {
+int check_vari(int &vari_int, int threshold) {
+    
+    if (vari_int >= threshold) {
+        
         return 0;
     }
-    else
-    {
+    else {
+        
         return 1;
     }
 }
@@ -237,8 +233,8 @@ int check_vari(int &vari_int, int threshold)
 *
 */
 
-int check_vari(string &vari_string, string threshold)
-{
+int check_vari(string &vari_string, string threshold) {
+    
     return vari_string.compare(threshold);
 }
 
@@ -254,8 +250,8 @@ int check_vari(string &vari_string, string threshold)
 *
 */
 
-int pass_vari(vector<string> str, int i, string keyword, double *passvari)
-{
+int pass_vari(vector<string> str, int i, string keyword, double *passvari) {
+    
     if (!str[i].compare(keyword))
     {
         read_vari(str, i, *passvari);
@@ -277,10 +273,10 @@ int pass_vari(vector<string> str, int i, string keyword, double *passvari)
 *
 */
 
-int pass_vari(vector<string> str, int i, string keyword, int *passvari)
-{
-    if (!str[i].compare(keyword))
-    {
+int pass_vari(vector<string> str, int i, string keyword, int *passvari) {
+    
+    if (!str[i].compare(keyword)) {
+        
         read_vari(str, i, *passvari);
         return 1;
     }
@@ -300,10 +296,10 @@ int pass_vari(vector<string> str, int i, string keyword, int *passvari)
 *
 */
 
-int pass_vari(vector<string> str, int i, string keyword, string *passvari)
-{
-    if (!str[i].compare(keyword))
-    {
+int pass_vari(vector<string> str, int i, string keyword, string *passvari) {
+    
+    if (!str[i].compare(keyword)) {
+        
         read_vari(str, i, *passvari);
         return 1;
     }
@@ -320,8 +316,8 @@ int pass_vari(vector<string> str, int i, string keyword, string *passvari)
 *
 */
 
-void print_error()
-{
+void print_error() {
+    
     cout << "Above is illegal input parameter, please check\n";
     exit(EXIT_FAILURE);
 }
@@ -337,8 +333,8 @@ void print_error()
 *
 */
 
-int allocate_matrix(double ***M, int nx, int ny)
-{
+int allocate_matrix(double ***M, int nx, int ny) {
+    
     int i;
     (*M) = (double**)malloc(sizeof(double*)*nx);
     if (*M == NULL)
@@ -359,8 +355,8 @@ int allocate_matrix(double ***M, int nx, int ny)
 *
 */
 
-void free_matrix(double ***M, int nx)
-{
+void free_matrix(double ***M, int nx) {
+    
     int i;
     for (i = 0; i<nx; i++)
         free((*M)[i]);

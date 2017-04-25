@@ -36,8 +36,8 @@ using namespace std;
  * boundary conditions and initial temperature perturbations.
  */
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
+    
     //simple timing function
     clock_t t1 = clock();  
 
@@ -128,8 +128,8 @@ int main(int argc, char* argv[])
                 bottom_condition, temp_left , T1, temp_right, temp_top, temp_bottom, total_time,
                 vx, vy);
     }
-    for (int i =0; i<ny; i++){
-        for (int j = 0; j < nx; j++){
+    for (int i =0; i<ny; i++) {
+        for (int j = 0; j < nx; j++) {
         cout << gsl_matrix_get (T1, i, j)<< endl;
        }
     }

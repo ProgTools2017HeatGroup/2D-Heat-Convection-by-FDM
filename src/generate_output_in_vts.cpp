@@ -9,8 +9,8 @@ using namespace std;
 
 
 // Simple function to enable name output files by string name
-std::string to_string(int i)
-{
+std::string to_string(int i) {
+    
     std::stringstream ss;
     ss << i;
     return ss.str();
