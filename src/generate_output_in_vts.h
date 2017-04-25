@@ -7,5 +7,5 @@
 using namespace std;
 
 
-int write_vts(string dirname, double dx, double dy, double x_ext, double y_ext, int time_step,
+int write_vts(string dirname, double total_time, double freq,  int** X, int** Y,
               int nx, int ny, gsl_matrix* T, gsl_matrix* Vx, gsl_matrix* Vy);
