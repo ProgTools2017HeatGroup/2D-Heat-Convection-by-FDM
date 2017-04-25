@@ -3,8 +3,9 @@
 #include <gsl/gsl_linalg.h>
 #include "calculate_velocity.h"
 
-void set_omega (gsl_matrix* rho, gsl_vector* x, int nx, int ny, double eta, double dx, double dy) {
+void set_omega (gsl_matrix* rho, gsl_vector* x, int nx, int ny, double eta, double dx, double dy) 
 
+{
     const double GRAVITY = 9.8;
     int s;
     // Allocate  matrix A in Ax = b
@@ -48,8 +49,8 @@ void set_omega (gsl_matrix* rho, gsl_vector* x, int nx, int ny, double eta, doub
 
 void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double dy, string left_condition,
                 string right_condition, string top_condition, string bottom_condition, double left_velocity,
-                double right_velocity, double top_velocity, double bottom_velocity) {
-
+                double right_velocity, double top_velocity, double bottom_velocity) 
+{
     int s;
     // Allocate  matrix A in Ax = b
     gsl_matrix* A = gsl_matrix_alloc (ny*nx, ny*nx);
@@ -127,8 +128,8 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
 
 void set_horizontal_velocity (gsl_matrix* rho, int nx, int ny, double eta, double dx, double dy, string left_condition,
                 string right_condition, string top_condition, string bottom_condition, double left_velocity,
-                double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* horizontal_velocity) {
-
+                double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* horizontal_velocity) 
+{
     gsl_vector *x = gsl_vector_alloc (ny*nx);
     set_omega (rho, x, nx, ny, eta, dx, dy);
 
@@ -158,8 +159,8 @@ void set_horizontal_velocity (gsl_matrix* rho, int nx, int ny, double eta, doubl
 
 void set_vertical_velocity (gsl_matrix* rho, int nx, int ny, double eta, double dx, double dy, string left_condition,
                 string right_condition, string top_condition, string bottom_condition, double left_velocity,
-                double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* vertical_velocity) {
-
+                double right_velocity, double top_velocity, double bottom_velocity, gsl_matrix* vertical_velocity) 
+{
     gsl_vector *x = gsl_vector_alloc (ny*nx);
     set_omega (rho,  x, nx, ny, eta, dx, dy);
     gsl_matrix* psi = gsl_matrix_alloc (ny, nx);
