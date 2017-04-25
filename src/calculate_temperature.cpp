@@ -52,7 +52,7 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
                             }
                         }
                     // left condition
-                    else if (j == 1 && i > 0 && i < ny - 1){
+                    else if (j == 1 && i > 0 && i < ny - 1) {
                         switch (left_condition) {
                             case 0:
                                 gsl_matrix_set (mat, k, k, 1);
@@ -64,7 +64,7 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
                             }
                         }
                    //risht condition
-                    else if (j == nx - 1 && i > 0 && i < ny - 1){
+                    else if (j == nx - 1 && i > 0 && i < ny - 1) {
                         switch (right_condition) {
                             case 0:
                                 gsl_matrix_set (mat, k, k, 1);
@@ -90,7 +90,7 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
                 // Internal nodes, vector b
                 gsl_vector_set (b, k, gsl_matrix_get(To, i, j)/dt);
                 // Add advective terms -vx*dT/dx
-                if (gsl_matrix_get (vx, i, j) > 0){
+                if (gsl_matrix_get (vx, i, j) > 0) {
                     gsl_vector_set(b, k, (gsl_vector_get (b, k) - gsl_matrix_get (vx, i, j)*(gsl_matrix_get(To, i, j)-
                     gsl_matrix_get(To, i, j-1))/dx));
                 }
@@ -99,7 +99,7 @@ void implicit_T1 (gsl_matrix* To, int nx, int ny, double dx, double dy, double k
                     gsl_matrix_get(To, i, j))/dx));
                 }
                 // -vy*dT/dy
-                if (gsl_matrix_get (vy, i, j) > 0){
+                if (gsl_matrix_get (vy, i, j) > 0) {
                     gsl_vector_set(b, k, (gsl_vector_get (b, k) - gsl_matrix_get (vy, i, j)*(gsl_matrix_get(To, i, j)-
                     gsl_matrix_get(To, i-1, j))/dy));
                 }
