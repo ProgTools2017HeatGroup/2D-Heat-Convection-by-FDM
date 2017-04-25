@@ -16,37 +16,19 @@
 using namespace std;
 
 // Get x values at the grid
-int** generate_x_points (int nx, int ny, double dx) {
+int** generate_points (int nx, int ny, double delta) {
     
-    int** x_grid = (int**) malloc(ny * sizeof(int*));
+    int** grid = (int**) malloc(ny * sizeof(int*));
     for (int ind = 0; ind < ny; ind++) {
-        x_grid[ind] = (int*) malloc (nx * sizeof (int));
+        grid[ind] = (int*) malloc (nx * sizeof (int));
     }
 
     int x_o = 0;
     for (int i=0; i < nx; i ++) {
         for (int j=0; j < ny; j++) {
-            x_grid[j][i] = x_o;
+            grid[j][i] = x_o;
         }
-        x_o += dx;
+        x_o += delta;
     }
-    return x_grid;
-}
-
-//Get Y values at the grid
-int** generate_y_points (int nx, int ny, double dy) {
-    
-    int** y_grid = (int**) malloc (ny * sizeof(int*));
-    for (int i = 0; i < ny; i++) {
-        y_grid[i] = (int*) malloc (nx * sizeof (int));
-    }
-
-    int y_o = 0;
-    for (int i=0; i < ny; i ++) {
-        for (int j=0; j < nx; j++) {
-            y_grid[i][j] = y_o;
-        }
-        y_o += dy;
-    }
-    return y_grid;
+    return grid;
 }
