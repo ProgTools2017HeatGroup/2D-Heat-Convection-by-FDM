@@ -28,8 +28,11 @@ using namespace std;
  * @author Arushi Saxena, Hao Lu, Jia Zhang
  * @return 0 on success
  *
- * The program aims to use finnite difference method to compute 2D heat
- * convection in a rectangular box.
+ * This program solves for the 2-D fluid convection in a Box due to an initial temperature perturbation 
+ * using finite difference method over a regular grid. For simplicity, the fluid is assumed is assumed 
+ * incompressible, Newtonian and slowly convecting. Our code itself has no internal knowledge of units. 
+ * The purpose of this program is to simulate the fluid convection under different initial conditions, 
+ * boundary conditions and initial temperature perturbations.
  */
 
 int main(int argc, char* argv[])

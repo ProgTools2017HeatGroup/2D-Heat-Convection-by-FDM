@@ -1,3 +1,12 @@
+/**
+* @short   input and output
+* @file    file_io.cpp
+* @author  Jia Zhang
+*
+* This file contains the functions used for reading input file and store parameters
+* and write into memory, login file and out to the screen.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -11,6 +20,16 @@
 using namespace std;
 //  output values in scientific form
 using std::scientific;
+
+/**
+* Author:    Jia Zhang
+*
+* Description: This function read all characters from input file in string format.
+* 
+* Return     0 on success
+*
+* Return     EXIT_FAILURE when input file is nonexistent or cannot be opened.
+*/
 
 int read_infile(char* args, vector<string> &str)
 {
@@ -37,6 +56,17 @@ int read_infile(char* args, vector<string> &str)
     return 0;
 }
 
+/**
+* Author:    Jia Zhang
+*
+* Description: This function read all of parameters to memory in the declared types.
+* It uses pass_vari() and check_vari() functions to store the parameters when they are reasonable.
+*
+* Return    0 on success
+*
+* Return    EXIT_FAILURE when the value of parameter is unreasonable.
+*/
+
 int store_params(vector<string> &str, double *rho, double *vis, double *diff, double *expa,
     int *xe, int *ye, int *nx, int *ny, string *left_con, string *right_con, string *bottom_con,
     string *top_con, int *left_condition, int *right_condition, int *bottom_condition, int *top_condition,
@@ -48,228 +78,90 @@ int store_params(vector<string> &str, double *rho, double *vis, double *diff, do
     size_t i = 0;
     while ( i<str.size() )
     {
-        if (str[i] == "density")
+        pass_vari(str, i, "expansion_coefficient", expa);
+        pass_vari(str, i, "temp_left_value", temp_left);
+        pass_vari(str, i, "temp_right_value", temp_right);
+        pass_vari(str, i, "temp_bottom_value", temp_bottom);
+        pass_vari(str, i, "temp_top_value", temp_top);
+        pass_vari(str, i, "velocity_left_value", velo_left);
+        pass_vari(str, i, "velocity_right_value", velo_right);
+        pass_vari(str, i, "velocity_bottom_value", velo_bottom);
+        pass_vari(str, i, "velocity_top_value", velo_top);
+        pass_vari(str, i, "Temperature", Temp);
+        pass_vari(str, i, "xo", xo);
+        pass_vari(str, i, "yo", yo);
+        pass_vari(str, i, "length", length);
+        pass_vari(str, i, "width", width);
+        pass_vari(str, i, "perturbation_T", pert_T);
+        pass_vari(str, i, "radius", radius);
+        pass_vari(str, i, "sigma", sigma);
+        pass_vari(str, i, "total_time", total_time);
+        pass_vari(str, i, "output_frequency", output_fre);
+        pass_vari(str, i, "simulation_type", simul_type);
+
+        if (pass_vari(str, i, "density", rho) && check_vari(*rho, 0))  print_error();
+        if (pass_vari(str, i, "viscosity", vis) && check_vari(*vis, 0)) print_error();
+        if (pass_vari(str, i, "diffusivity", diff) && check_vari(*diff, 0)) print_error();
+        if (pass_vari(str, i, "x_extend", xe) && check_vari(*xe, 0)) print_error();
+        if (pass_vari(str, i, "y_extend", ye) && check_vari(*ye, 0)) print_error();
+        if (pass_vari(str, i, "nx", nx) && check_vari(*nx, 0)) print_error();
+        if (pass_vari(str, i, "ny", ny) && check_vari(*ny, 0)) print_error();
+
+        if (pass_vari(str, i, "left_condition", left_con))
         {
-            if (read_double(str, i, *rho) || check_vari_double(*rho,0))
-            {
-                print_error();
-            }
+            if (check_vari(*left_con, "NO_SLIP") && check_vari(*left_con, "FREE_SLIP"))  print_error();
         }
-        if (str[i] == "viscosity")
+        if (pass_vari(str, i, "right_condition", right_con))
         {
-            if (read_double(str, i, *vis) || check_vari_double(*vis,0))
-            {
-                print_error();
-            }
-                
+            if (check_vari(*right_con, "NO_SLIP") && check_vari(*right_con, "FREE_SLIP"))  print_error();
         }
-        if (str[i] == "diffusivity")
+        if (pass_vari(str, i, "bottom_condition", bottom_con))
         {
-            if (read_double(str, i, *diff) || check_vari_double(*diff,0))
-            {
-                print_error();
-            }
+            if (check_vari(*bottom_con, "NO_SLIP") && check_vari(*bottom_con, "FREE_SLIP"))  print_error();
         }
-        if (str[i] == "expansion_coefficient")
+        if (pass_vari(str, i, "top_condition", top_con))
         {
-            read_double(str, i, *expa);
+            if (check_vari(*top_con, "NO_SLIP") && check_vari(*top_con, "FREE_SLIP"))  print_error();
         }
-        if (str[i] == "x_extend")
+        if (pass_vari(str, i, "temp_left_condition", left_condition))
         {
-            if (read_int(str, i, *xe) || check_vari_int(*xe,0))
-            {
-                print_error();
-            }
+            if (check_vari(*left_condition, 0) || !check_vari(*left_condition, 2)) print_error();
         }
-        if (str[i] == "y_extend")
+        if (pass_vari(str, i, "temp_right_condition", right_condition))
         {
-            if (read_int(str, i, *ye) || check_vari_int(*ye,0))
-            {
-                print_error();
-            }
+            if (check_vari(*right_condition, 0) || !check_vari(*right_condition, 2)) print_error();
         }
-        if (str[i] == "nx")
+        if (pass_vari(str, i, "temp_bottom_condition", bottom_condition))
         {
-            if (read_int(str, i, *nx) || check_vari_int(*nx,0))
-            {
-                print_error();
-            }
+            if (check_vari(*bottom_condition, 0) || !check_vari(*bottom_condition, 2)) print_error();
         }
-        if (str[i] == "ny")
+        if (pass_vari(str, i, "temp_top_condition", top_condition))
         {
-            if (read_int(str, i, *ny) || check_vari_int(*ny,0))
-            {
-                print_error();
-            }
+            if (check_vari(*top_condition, 0) || !check_vari(*top_condition, 2)) print_error();
         }
-        if (str[i] == "left_condition")
+        if (pass_vari(str, i, "perturbation_type", pert_type))
         {
-            read_string(str, i, *left_con);
-            if (check_vari_string(*left_con, "NO_SLIP") && check_vari_string(*left_con, "FREE_SLIP"))
-            {
-                print_error();
-            }
-        }
-        if (str[i] == "right_condition")
-        {
-            read_string(str, i, *right_con);
-            if (check_vari_string(*right_con, "NO_SLIP") && check_vari_string(*right_con, "FREE_SLIP"))
-            {
-                print_error();
-            }
-        }
-        if (str[i] == "bottom_condition")
-        {
-            read_string(str, i, *bottom_con);
-            if (check_vari_string(*bottom_con, "NO_SLIP") && check_vari_string(*bottom_con, "FREE_SLIP"))
-            {
-                print_error();
-            }
-        }
-        if (str[i] == "top_condition")
-        {
-            read_string(str, i, *top_con);
-            if (check_vari_string(*top_con, "NO_SLIP") && check_vari_string(*top_con, "FREE_SLIP"))
-            {
-                print_error();
-            }
-        }
-        if (str[i] == "temp_left_condition")
-        {
-            if (read_int(str, i, *left_condition) || check_vari_int(*left_condition, 0)
-                || !check_vari_int(*left_condition, 2))
-            {
-                print_error();
-            }
-        }
-        if (str[i] == "temp_right_condition")
-        {
-            if (read_int(str, i, *right_condition) || check_vari_int(*right_condition, 0)
-                || !check_vari_int(*right_condition, 2))
-            {
-                print_error();
-            }
-        }
-        if (str[i] == "temp_bottom_condition")
-        {
-            if (read_int(str, i, *bottom_condition) || check_vari_int(*bottom_condition, 0)
-                || !check_vari_int(*bottom_condition, 2))
-            {
-                print_error();
-            }
-        }
-        if (str[i] == "temp_top_condition")
-        {
-            if (read_int(str, i, *top_condition) || check_vari_int(*top_condition, 0)
-                || !check_vari_int(*top_condition, 2))
-            {
-                print_error();
-            }
-        }
-        if (str[i] == "temp_left_value")
-        {
-            read_double(str, i, *temp_left);
-        }
-        if (str[i] == "temp_right_value")
-        {
-            read_double(str, i, *temp_right);
-        }
-        if (str[i] == "temp_bottom_value")
-        {
-            read_double(str, i, *temp_bottom);
-        }
-        if (str[i] == "temp_top_value")
-        {
-            read_double(str, i, *temp_top);
-        }
-        if (str[i] == "velocity_left_value")
-        {
-            read_double(str, i, *velo_left);
-        }
-        if (str[i] == "velocity_right_value")
-        {
-            read_double(str, i, *temp_right);
-        }
-        if (str[i] == "velocity_bottom_value")
-        {
-            read_double(str, i, *temp_bottom);
-        }
-        if (str[i] == "velocity_top_value")
-        {
-            read_double(str, i, *temp_top);
+            if (check_vari(*pert_type, "BOX") && check_vari(*pert_type, "DISK")
+                && check_vari(*pert_type, "GAUSSIAN"))   print_error();
         }
 //        if (str[i] == "Temperature")
 //        {
 //            allocate_matrix(T, *nx, *ny);
 //            read_matrix(str, i, T, nx, ny);
 //        }
-//        if (str[i] == "Velocity_X")
-//        {
-//            allocate_matrix(Vx, *nx, *ny);
-//            read_matrix(str, i, Vx, nx, ny);
-//        }
-//        if (str[i] == "Velocity_Y")
-//        {
-//            allocate_matrix(Vy, *nx, *ny);
-//            read_matrix(str, i, Vy, nx, ny);
-//        }
-        if (str[i] == "Temperature")
-        {
-            read_double(str, i, *Temp);
-        }
-        if (str[i] == "perturbation_type")
-        {
-            read_string(str, i, *pert_type);
-            if( check_vari_string(*pert_type, "BOX") && check_vari_string(*pert_type, "DISK")
-                && check_vari_string(*pert_type, "GAUSSIAN"))
-            {
-                print_error();
-            }
-        }
-        if (str[i] == "xo")
-        {
-            read_double(str, i, *xo);
-        }
-        if (str[i] == "yo")
-        {
-            read_double(str, i, *yo);
-        }
-        if (str[i] == "length")
-        {
-            read_double(str, i, *length);
-        }
-        if (str[i] == "width")
-        {
-            read_double(str, i, *width);
-        }
-        if (str[i] == "perturbation_T")
-        {
-            read_double(str, i, *pert_T);
-        }
-        if (str[i] == "radius")
-        {
-            read_double(str, i, *radius);
-        }
-        if (str[i] == "sigma")
-        {
-            read_double(str, i, *sigma);
-        }
-        if (str[i] == "total_time")
-        {
-            read_double(str, i, *total_time);
-        }
-        if (str[i] == "output_frequency")
-        {
-            read_double(str, i, *output_fre);
-        }
-        if (str[i] == "simulation_type")
-        {
-            read_string(str, i, *simul_type);
-        }
         i++;
     }
     return 0;
 }
+
+/**
+* Author:    Jia Zhang
+*
+* Description: This function used for printing parameters into log file.
+*
+* Return     0 on success
+*
+*/
 
 int write_logfile(char* args, double *rho, double *vis, double *diff, double *expa,
     int *xe, int *ye, int *nx, int *ny, string *left_con, string *right_con, string *bottom_con,
@@ -301,34 +193,6 @@ int write_logfile(char* args, double *rho, double *vis, double *diff, double *ex
     logfile << "temp_right_value =\n" << scientific << *temp_left << endl;
     logfile << "temp_bottom_value =\n" << scientific << *temp_bottom << endl;
     logfile << "temp_top_value =\n" << scientific << *temp_top << endl;
-//    int j, k;
-//    logfile << "Temperature =\n";
-//    for (j = 0; j < *nx; j = j + 1)
-//    {
-//        for (k = 0; k < *ny; k = k + 1)
-//        {
-//            logfile << scientific << (*T)[j][k] << "\t";
-//        }
-//        logfile << "\n";
-//    }
-//    logfile << "Velocity_X =\n";
-//    for (j = 0; j < *nx; j = j + 1)
-//    {
-//        for (k = 0; k < *ny; k = k + 1)
-//        {
-//            logfile << scientific << (*Vx)[j][k] << "\t";
-//        }
-//        logfile << "\n";
-//    }
-//    logfile << "Velocity_Y =\n";
-//    for (j = 0; j < *nx; j = j + 1)
-//    {
-//        for (k = 0; k < *ny; k = k + 1)
-//        {
-//            logfile << scientific << (*Vy)[j][k] << "\t";
-//        }
-//        logfile << "\n";
-//    }
     logfile << "velo_left_value =\n" << scientific << *velo_left << endl;
     logfile << "velo_right_value =\n" << scientific << *velo_left << endl;
     logfile << "velo_bottom_value =\n" << scientific << *velo_bottom << endl;
@@ -360,6 +224,16 @@ int write_logfile(char* args, double *rho, double *vis, double *diff, double *ex
     logfile << "total_time =\n" << scientific << *total_time << endl;
     logfile << "output_frequency=\n" << scientific << *output_fre << endl;
     logfile << "simulation_type=\n" << *simul_type << endl;
+//    int j, k;
+//    logfile << "Temperature =\n";
+//    for (j = 0; j < *nx; j = j + 1)
+//    {
+//        for (k = 0; k < *ny; k = k + 1)
+//        {
+//            logfile << scientific << (*T)[j][k] << "\t";
+//        }
+//        logfile << "\n";
+//    }
 
     logfile.close();
 

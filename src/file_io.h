@@ -1,3 +1,12 @@
+/**
+* @short   Input and output Headers
+* @file    file_io.h
+* @author  Jia Zhang
+*
+* This file contains the prototypes all functions used for reading in and printing out.
+*
+*/
+
 #ifndef FILE_IO_H_
 #define FILE_IO_H_
 
@@ -11,6 +20,9 @@
 #include <cstdlib>
 
 using namespace std;
+
+// Description: These functions for reading the input and write to logfile
+// -----------------------------------------------------------------------
 
 int read_infile(char* args, vector<string> &str);
 int store_params(vector<string> &str, double *rho, double *vis, double *diff, double *expa,
@@ -27,7 +39,5 @@ int write_logfile(char* args, double *rho, double *vis, double *diff, double *ex
     double *velo_right, double *velo_bottom, double *velo_top, double *Temp, string *pert_type, double *xo,
     double *yo, double *pert_T, double *length, double *width, double *radius, double *sigma, double *total_time,
     double *output_fre, string *simul_type);
-
-
 
 #endif
