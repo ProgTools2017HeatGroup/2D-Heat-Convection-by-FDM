@@ -48,10 +48,10 @@ for (int t=1; t<total_time; t+= output_freq) {
 
     // Start writing coordinates info
     // For .vts file, x coordinate increase first, then y coordinate, thus outer loop for y, inner loop for x
-    for (int j=0; j<=y_ext; j+=dy)
-    {
-        for (int i=0; i<=x_ext; i+=dx)
-        {
+    for (int j=0; j<=y_ext; j+=dy) {
+        
+        for (int i=0; i<=x_ext; i+=dx) {
+       
             fout << i << " " << j << " 0" << endl;
         }
     }
@@ -65,10 +65,10 @@ for (int t=1; t<total_time; t+= output_freq) {
     // Start writing velocity field for each nodel point based on output velocity matrix
     // Format in "Vx Vy Vz" for first point, then change line, same drill.
     // 2D case, z components stay 0
-    for (int j=0; j<ny; j++)
-    {
-        for (int i=0; i<nx; i++)
-        {
+    for (int j=0; j<ny; j++) {
+    
+        for (int i=0; i<nx; i++) {
+        
             fout << gsl_matrix_get(Vx,j,i) << " " << gsl_matrix_get(Vy,j,i) << " 0" << endl;
         }
     }
@@ -81,10 +81,10 @@ for (int t=1; t<total_time; t+= output_freq) {
     // Start writing temperature distribution for each time step.
     // Same way to count each nodel point, x increase first, then y.
     // But this time for .vts file, should write in one colume, starts with first point (leastx, leasty, least z)
-    for (int j=0; j<ny; j++)
-    {
-        for (int i=0; i<nx; i++)
-        {
+    for (int j=0; j<ny; j++) {
+    
+        for (int i=0; i<nx; i++) {
+        
             fout << gsl_matrix_get(T,j,i) << endl;
         }
     }
