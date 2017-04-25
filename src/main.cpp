@@ -43,9 +43,9 @@ int main(int argc, char* argv[])
     int opt;
     char *infile, *logfile;
 
-    while ((opt = getopt(argc, argv, "i:o:hv")) != -1)
+    while ((opt = getopt(argc, argv, "i:o:hv")) != -1) {
         switch (opt)
-    {
+    
         case 'h':
             cout << "usage: " << argv[0] << " [OPTIONS][-i] INPUTFILENAME;[-o] LOGFILENAME;[-h] HELP;[-v] VERSION" << endl;
             break;
@@ -66,18 +66,18 @@ int main(int argc, char* argv[])
             cout << "Logfile is " << logfile << endl;
             break;
         case '?':
-            if (optopt == 'i')
-            {
+            if (optopt == 'i') {
+            
                 cout << "Missing inputfile option" <<endl;
                 exit(EXIT_FAILURE);
             }
-            else if (optopt == 'o')
-            {
+            else if (optopt == 'o') {
+            
                 cout << "Missing logfile option" << endl;
                 exit(EXIT_FAILURE);
             }
-            else
-            {
+            else {
+            
                 cout << "Unknown option" << endl;
                 exit(EXIT_FAILURE);
             }
@@ -130,10 +130,12 @@ int main(int argc, char* argv[])
 
     if (pert_type == "BOX") {
         set_box (To, dx, dy, length, width, xo, yo, pert_T, xe, ye);
+        
     } else if (pert_type == "DISK") {
         set_disk (To, dx, dy, radius, xo, yo, pert_T, xe, ye);
     }
-    else if (pert_type == "GAUSSIAN")  {
+    
+    else if (pert_type == "GAUSSIAN") {
         set_gaussian (To, dx, dy, sigma, xo, yo, pert_T, xe, ye);
     }
 
