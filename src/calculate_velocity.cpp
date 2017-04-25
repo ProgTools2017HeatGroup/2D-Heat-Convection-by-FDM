@@ -3,9 +3,12 @@
 #include <gsl/gsl_linalg.h>
 #include "calculate_velocity.h"
 
-void set_omega (gsl_matrix* rho, gsl_vector* x, int nx, int ny, double eta, double dx, double dy) 
+// Solving Poisson equation for vorticity  d2OMEGA/dx2+d2OMEGA/dy2=gy*dRHO/dx
+// Composing matrix of coefficients A()  and vector (column) of right parts b()
+// Boundary conditions: OMEGA=0 ; Process all Grid points
 
-{
+void set_omega (gsl_matrix* rho, gsl_vector* x, int nx, int ny, double eta, double dx, double dy) {
+
     const double GRAVITY = 9.8;
     int s;
     // Allocate  matrix A in Ax = b
@@ -65,12 +68,12 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
 
             if (i == 0 || i == ny - 1 || j == 0 || j == nx - 1) {             
                 if (j == 0 && left_condition == "NO_SLIP") {
-                        gsl_matrix_set (A, k, k, 1);
-                        gsl_vector_set (x, k, 0);
+                    gsl_matrix_set (A, k, k, 1);
+                    gsl_vector_set (x, k, 0);
                 }
                 else if (j == 0 && left_condition == "FREE_SLIP") {
-                        gsl_matrix_set (A, k, k, 1);
-                        gsl_vector_set (x, k, -left_velocity*dx);
+                    gsl_matrix_set (A, k, k, 1);
+                    gsl_vector_set (x, k, -left_velocity*dx);
                 }
                 
                 else if (j == nx - 1 && right_condition == "NO_SLIP") {
@@ -78,24 +81,24 @@ void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double 
                     gsl_vector_set (x, k, 0);
                 }
                 else if (j == nx - 1 && right_condition == "FREE_SLIP") {
-                        gsl_matrix_set (A, k, k, 1);
-                        gsl_vector_set (x, k, -right_velocity*dx);
+                    gsl_matrix_set (A, k, k, 1);
+                    gsl_vector_set (x, k, -right_velocity*dx);
                 }
                 else if (i == 0 && j > 0 && j < nx - 1 && top_condition == "NO_SLIP") {
-                        gsl_matrix_set (A, k, k, 1);
-                        gsl_vector_set (x, k, 0);
+                    gsl_matrix_set (A, k, k, 1);
+                    gsl_vector_set (x, k, 0);
                 }
                 else if (i == 0 && j > 0 && j < nx - 1 && top_condition == "FREE_SLIP") {
-                        gsl_matrix_set (A, k, k, 1);
-                        gsl_vector_set (x, k, top_velocity*dy);
+                    gsl_matrix_set (A, k, k, 1);
+                    gsl_vector_set (x, k, top_velocity*dy);
                 }
                 else if (i == ny - 1 && j > 0 && j < nx - 1 && bottom_condition == "NO_SLIP") {
-                        gsl_matrix_set (A, k, k, 1);
-                        gsl_vector_set (x, k, 0);
+                    gsl_matrix_set (A, k, k, 1);
+                    gsl_vector_set (x, k, 0);
                 }
                 else if (i == ny - 1 && j > 0 && j < nx - 1 && bottom_condition == "FREE_SLIP") {
-                        gsl_matrix_set (A, k, k, 1);
-                        gsl_vector_set (x, k, bottom_velocity*dy);
+                    gsl_matrix_set (A, k, k, 1);
+                    gsl_vector_set (x, k, bottom_velocity*dy);
                 }
             }
 

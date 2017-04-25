@@ -7,9 +7,6 @@
 #include <string>
 
 using namespace std;
-// Solving Poisson equation for vorticity  d2OMEGA/dx2+d2OMEGA/dy2=gy*dRHO/dx
-// Composing matrix of coefficients A()  and vector (column) of right parts b()
-// Boundary conditions: OMEGA=0 ; Process all Grid points
 
 void set_psi (gsl_matrix* psi, gsl_vector* x, int nx, int ny, double dx, double dy, string left_condition,
                 string right_condition, string top_condition, string bottom_condition, double left_velocity,

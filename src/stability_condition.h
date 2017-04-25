@@ -4,7 +4,6 @@
 #include "generate_regular_grid.h"
 #include "calculate_velocity.h"
 
-double stable_time (double x_extent, double y_extent, int nx, int ny, double kappa,
-             gsl_matrix * vx, gsl_matrix * vy, double dx, double dy);
+double stable_time (double kappa, gsl_matrix * vx, gsl_matrix * vy, double dx, double dy);
 
 #endif

@@ -19,6 +19,7 @@
 //#include "boundary.h"
 #include "calculate_temperature.h"
 #include "calculate_velocity.h"
+#include "stability_condition.h"
 //#include "generate_output_in_vts.h"
 
 using namespace std;
@@ -160,9 +161,8 @@ int main(int argc, char* argv[])
     
     cout << "Calculating stable iteration time step based input" << endl;
     
-    double dt = stable_time (xe, ye, nx, ny, diff, vx, vy, dx, dy);
-    cout << dt << endl;
-    
+    double dt = stable_time (diff, vx, vy, dx, dy);
+
     // allocate memory for initial temperature
     gsl_matrix* T1 = gsl_matrix_alloc(ny,nx);
     

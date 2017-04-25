@@ -15,23 +15,23 @@
 
 using namespace std;
 
-double stable_time (double x_extent, double y_extent, int nx, int ny, double kappa,
-                    gsl_matrix * vx, gsl_matrix * vy, double dx, double dy) {
+double stable_time (double kappa, gsl_matrix * vx, gsl_matrix * vy, double dx, double dy) {
 
-    double dt;
-    if (dx > dy) {
-        dt =   dx*dx/(3*kappa);                         // Limitation for explicit timestep
-        // Limitation for horizontal advection timestep
-        if ( abs(gsl_matrix_max(vx)) !=0 && dt > (abs(dx/gsl_matrix_max(vx))) ) {
-            dt = (abs(dx/gsl_matrix_max(vx)));
+    double t;
+    if (dx >= dy) {
+        t =  dx*dx/(3*kappa);                         // Limitation for explicit timestep
+        //Limitation for horizontal advection timestep
+        if ( t > abs(dx/gsl_matrix_max(vx)) ) {
+           t = (abs(dx/gsl_matrix_max(vx)));
+           
         }
     }
     else if (dy > dx) {
-        dt =   dy*dy/(3*kappa);
+        t =  dy*dy/(3*kappa);
         // Limitation for vertical advection timestep
-        if ( abs(gsl_matrix_max(vy)) !=0 && dt > (abs(dy/gsl_matrix_max(vy))) ) {
-            dt = (abs(dy/gsl_matrix_max(vy)));
+        if ( t > abs(dy/gsl_matrix_max(vy)) ) {
+            t = (abs(dy/gsl_matrix_max(vy)));
         }
     }
-    return (0.7*dt);
+    return t;
 }
