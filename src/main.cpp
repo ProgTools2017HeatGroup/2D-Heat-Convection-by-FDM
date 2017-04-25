@@ -17,11 +17,10 @@
 #include "utility.h"
 #include "structs.h"
 #include "set_density.h"
-//#include "boundary.h"
 #include "calculate_temperature.h"
 #include "calculate_velocity.h"
 #include "stability_condition.h"
-//#include "generate_output_in_vts.h"
+#include "generate_output_in_vts.h"
 
 using namespace std;
 /**
@@ -137,9 +136,9 @@ int main(int argc, char* argv[])
     //generate output file in .vts format
     
     string dirname;
-    double time_step;
-
-//    write_vts(dirname, dx, dy, xe, ye, time_step, nx, ny, T1, vx, vy, total_time);
+    
+    write_vts(dirname, total_time, output_fre, X, Y,
+            nx, ny, T1, vx, vy);
 
     std::cout << "Program runing time: "<<float( clock () - t1 ) / CLOCKS_PER_SEC<< endl;
     
