@@ -2,7 +2,7 @@ density =
 3.3e3
 
 viscosity = 
-1e19
+1e13
 
 diffusivity = 
 1e-6
@@ -80,22 +80,22 @@ xo =
 100
 
 yo =
-50
+200
 
 length =
-50
+100
 
 width =
 100
 
 perturbation_T =
-2.e3
+1.5e3
 
 total_time =
-2.e6
+2000
 
 output_frequency =
-1
+200
 
 simulation_type =
 IMPLICIT
