@@ -17,7 +17,7 @@ struct Parameters
     double velo_left, velo_right, velo_bottom, velo_top;
     double total_time, output_fre;
     double xo, yo, pert_T, length, width, radius, sigma;
-    string left_con, right_con, bottom_con, top_con, pert_type, simul_type;
+    string left_con, right_con, bottom_con, top_con, pert_type, simul_type, output_path;
 };
 
 #endif

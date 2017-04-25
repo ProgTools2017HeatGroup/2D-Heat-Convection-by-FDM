@@ -99,3 +99,6 @@ output_frequency =
 
 simulation_type =
 IMPLICIT
+
+output_path =
+output
