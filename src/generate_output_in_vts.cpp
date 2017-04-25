@@ -17,8 +17,8 @@ std::string to_string(int i)
 }
 
 int write_vts(string dirname, double dx, double dy, double x_ext, double y_ext,double total_time, int time_step,
-              int nx, int ny, gsl_matrix* T, gsl_matrix* Vx, gsl_matrix* Vy, double output_freq) {
-
+              int nx, int ny, gsl_matrix* T, gsl_matrix* Vx, gsl_matrix* Vy, double output_freq) 
+{
     //Loop over each time step with the big code below to generate a .vts file for each time step
 for (int t=1; t<total_time; t+= output_freq) {
    
