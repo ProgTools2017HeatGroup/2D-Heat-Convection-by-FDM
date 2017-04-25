@@ -163,6 +163,7 @@ int main(int argc, char* argv[])
     cout << "Calculating stable iteration time step based input" << endl;
     
     double dt = stable_time (diff, vx, vy, dx, dy);
+    cout << dt << endl;
 
     // allocate memory for initial temperature
     gsl_matrix* T1 = gsl_matrix_alloc(ny,nx);
@@ -184,7 +185,11 @@ int main(int argc, char* argv[])
                 bottom_condition, temp_left , T1, temp_right, temp_top, temp_bottom, total_time,
                 vx, vy);
     }
-    
+    for (int i =0; i<ny; i++){
+        for (int j = 0; j < nx; j++){
+        cout << gsl_matrix_get (T1, i, j)<< endl;
+       }
+    }
     //generate output file in .vts format
     
     string dirname;

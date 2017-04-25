@@ -92,7 +92,7 @@ perturbation_T =
 2.e3
 
 total_time =
-200
+2.e6
 
 output_frequency =
 1
