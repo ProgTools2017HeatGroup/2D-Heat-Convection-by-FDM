@@ -2,9 +2,9 @@ CC = g++
 
 CPPFLAGS = -Wall
 
-GSLFLAGS = -I/usr/include/gsl
+GSLFLAGS = -I/public/apps/gsl/1.16/gcc.4.4.7/include/gsl
 
-LDFLAGS = -L/usr/lib -lm -lgsl -lgslcblas
+LDFLAGS = -L/public/apps/gsl/1.16/gcc.4.4.7/lib -lm -lgsl -lgslcblas
 
 EXEC = ../fdm2D
 
