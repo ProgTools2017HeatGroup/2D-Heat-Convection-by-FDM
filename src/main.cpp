@@ -65,8 +65,8 @@ int main(int argc, char* argv[]) {
     double dx = params.xe/(params.nx-1);
 
     // get points in X and Y direction for printing in output
-    int** X = generate_x_points (params.nx, params.ny, dx);
-    int** Y = generate_y_points (params.nx, params.ny, dy);
+    int** X = generate_points (params.nx, params.ny, dx);
+    int** Y = generate_points (params.nx, params.ny, dy);
     
     // allocate memory for initial temperature
     gsl_matrix* To = gsl_matrix_alloc(params.ny,params.nx);
