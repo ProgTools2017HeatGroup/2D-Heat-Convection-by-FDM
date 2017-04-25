@@ -169,8 +169,8 @@ int main(int argc, char* argv[])
     // Process all grid points for Implicit Solving
     
     if (simul_type == "IMPLICIT") {
-    implicit_T1 (To, nx, ny, dx, dy, diff , dt, left_condition, right_condition, top_condition, 
-                bottom_condition, temp_left , T1, temp_right, temp_top, temp_bottom, total_time,
+    implicit_T1 (To, nx, ny, dx, dy, diff, dt, left_condition, right_condition, top_condition, 
+                bottom_condition, temp_left, T1, temp_right, temp_top, temp_bottom, total_time,
                 vx, vy);
     } 
     else {

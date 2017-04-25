@@ -2,9 +2,9 @@ CC = g++
 
 CPPFLAGS = -Wall
 
-GSLFLAGS = -I/home/asaxena/Downloads/softwares/gsl/include
+GSLFLAGS = -I/usr/include/gsl
 
-LDFLAGS = -L/home/asaxena/Downloads/softwares/gsl/lib -lm -lgsl -lgslcblas
+LDFLAGS = -L/usr/lib -lm -lgsl -lgslcblas
 
 EXEC = ../fdm2D
 
@@ -15,7 +15,7 @@ $(EXEC): main.o file_io.o utility.o generate_regular_grid.o boundary.o stability
 	${CC} ${CPPFLAGS} $^ -o $@  ${GSLFLAGS} ${LDFLAGS}
 
 clean: 
-	rm -rf *.o
+	rm -rf *.o 
 
 cleanall:
-	rm -rf *.o $(EXEC) ../latex/ ../html/ 
+	rm -rf *.o $(EXEC) 
