@@ -1,3 +1,9 @@
+// Function output data set into standard .vts file for visualisation via ParaView.
+
+// Acknowledgement:
+// This file was generated with the help about file layout for .vts file, from Dr. Eunseo Choi, CERI, The University of Memphis, 
+// together with the coding guidence from Yu Geng, CERI, The University of Memphis
+
 #include <string>
 #include <sstream>
 #include <fstream>
