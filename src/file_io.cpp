@@ -40,6 +40,7 @@ int read_infile(char* args, vector<string> &str) {
 
     infile.open(args);
     if (!infile.is_open())
+    
     {
         cout << "inputfile not found\n" << endl;
         exit(EXIT_FAILURE);
@@ -47,6 +48,7 @@ int read_infile(char* args, vector<string> &str) {
 
     // Read variables as strings from infile
     while (infile >> s)
+    
     {
         str.push_back(s);
         i++;
@@ -107,44 +109,48 @@ int store_params(vector<string> &str, Parameters *params) {
             
             if (check_vari(params->left_con, "NO_SLIP") && check_vari(params->left_con, "FREE_SLIP"))  print_error();
         }
+        
         if (pass_vari(str, i, "right_condition", &params->right_con)) {
             
             if (check_vari(params->right_con, "NO_SLIP") && check_vari(params->right_con, "FREE_SLIP"))  print_error();
         }
+        
         if (pass_vari(str, i, "bottom_condition", &params->bottom_con)) {
             
             if (check_vari(params->bottom_con, "NO_SLIP") && check_vari(params->bottom_con, "FREE_SLIP"))  print_error();
         }
+        
         if (pass_vari(str, i, "top_condition", &params->top_con)) {
             
             if (check_vari(params->top_con, "NO_SLIP") && check_vari(params->top_con, "FREE_SLIP"))  print_error();
         }
+        
         if (pass_vari(str, i, "temp_left_condition", &params->left_condition)) {
             
             if (check_vari(params->left_condition, 0) || !check_vari(params->left_condition, 2)) print_error();
         }
+        
         if (pass_vari(str, i, "temp_right_condition", &params->right_condition)) {
             
             if (check_vari(params->right_condition, 0) || !check_vari(params->right_condition, 2)) print_error();
         }
+        
         if (pass_vari(str, i, "temp_bottom_condition", &params->bottom_condition)) {
             
             if (check_vari(params->bottom_condition, 0) || !check_vari(params->bottom_condition, 2)) print_error();
         }
+        
         if (pass_vari(str, i, "temp_top_condition", &params->top_condition)) {
             
             if (check_vari(params->top_condition, 0) || !check_vari(params->top_condition, 2)) print_error();
         }
+        
         if (pass_vari(str, i, "perturbation_type", &params->pert_type)) {
             
             if (check_vari(params->pert_type, "BOX") && check_vari(params->pert_type, "DISK")
                 && check_vari(params->pert_type, "GAUSSIAN"))   print_error();
         }
-        //        if (str[i] == "Temperature")
-        //        {
-        //            allocate_matrix(T, *params->nx, *params->ny);
-        //            read_matrix(str, i, T, params->nx, params->ny);
-        //        }
+        
         i++;
     }
     return 0;
@@ -198,6 +204,7 @@ int write_logfile(char* args, Parameters *params) {
         logfile << "width =\n" << scientific << params->width << endl;
         logfile << "perturbation_T =\n" << scientific << params->pert_T << endl;
     }
+    
     else if (params->pert_type == "DISK") {
         
         logfile << "xo =\n" << scientific << params->xo << endl;
@@ -205,6 +212,7 @@ int write_logfile(char* args, Parameters *params) {
         logfile << "radius =\n" << scientific << params->radius << endl;
         logfile << "perturbation_T =\n" << scientific << params->pert_T << endl;
     }
+    
     else if (params->pert_type == "GAUSSIAN") {
         
         logfile << "xo =\n" << scientific << params->xo << endl;
@@ -217,17 +225,7 @@ int write_logfile(char* args, Parameters *params) {
     logfile << "output_frequency =\n" << scientific << params->output_fre << endl;
     logfile << "simulation_type =\n" << params->simul_type << endl;
     logfile << "output_path=\n" << params->output_path << endl;
-    //    int j, k;
-    //    logfile << "Temperature =\n";
-    //    for (j = 0; j < *params->nx; j = j + 1)
-    //    {
-    //        for (k = 0; k < *params->ny; k = k + 1)
-    //        {
-    //            logfile << scientific << (*T)[j][k] << "\t";
-    //        }
-    //        logfile << "\n";
-    //    }
-
+    
     logfile.close();
 
     return 0;

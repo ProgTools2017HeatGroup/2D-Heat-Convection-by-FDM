@@ -2,6 +2,8 @@
 #include <iostream>
 #include "structs.h"
 
+
+//Function apply density to mesh grids
 using namespace std;
 
 void set_density (gsl_matrix* T_o, gsl_matrix* rho, Parameters *params) {

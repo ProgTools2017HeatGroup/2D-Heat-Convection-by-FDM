@@ -28,20 +28,26 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
 
     int tnum = round(total_time/dt); // number of time steps
     for (int t = 1; t <= tnum; t++) {
+        
         // Allocate  matrix A in Ax = b
         gsl_matrix* mat = gsl_matrix_alloc (ny*nx, ny*nx);
+        
         // Allocate  right side of vector , b
         gsl_vector* b   = gsl_vector_calloc (ny*nx);
         int s;
+        
         // soving for dT/dt+vx*dT/dx+vy*dT/dy=kappa*(d2T/dx2+d2T/dy2)
         // Composing matrix of coefficients mat()
         // and vector (column) of right parts b()
         // Process all grid points for Implicit Solving
         for (int i = 0; i < ny; i++) {
+            
             for (int j = 0; j < nx; j++) {
+                
                 int k = (j*ny) + i;
 
                 if (i == 0 || i == ny - 1 || j == 0 || j == nx - 1) {
+                    
                     // Upper Boundary
                     if (i == 0) {
                         switch (top_condition) {
@@ -54,6 +60,7 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
                                 gsl_vector_set (b, k, top_temp);
                             }
                         }
+                    
                    // Bottom boundary
                     else if (i == ny - 1) {
                         switch (bottom_condition) {
@@ -66,6 +73,7 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
                                 gsl_vector_set (b, k, bottom_temp);
                             }
                         }
+                    
                     // left condition
 
                     else if (j == 0 && i > 0 && i < ny - 1){
@@ -79,6 +87,7 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
                                 gsl_vector_set (b, k, left_temp);
                             }
                         }
+                    
                    //risht condition
                     else if (j == nx - 1 && i > 0 && i < ny - 1) {
                         switch (right_condition) {
@@ -92,6 +101,7 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
                             }
                         }
                     }
+                
                 // Internal nodes, matrix A
 
                 else {
@@ -100,27 +110,33 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
                         -kappa*(Tnew(i-1,j)-2*Tnew(i,j)+Tnew(i+1,j))/dy^2=
                         =Told(i,j)/dt-vx*dT/dx-vy*dT/dy
                         */
+                    
                     gsl_matrix_set (mat, k, k - ny, (-kappa/dx)*kappa/dx); // coefficient for T(i,j-1)
                     gsl_matrix_set (mat, k, k + ny, (-kappa/dx)*kappa/dx); // coefficient for T(i,j+1)
                     gsl_matrix_set (mat, k, k + 1, (-kappa/dy)*kappa/dy);  // coefficient for T(i+1,j)
                     gsl_matrix_set (mat, k, k - 1, (-kappa/dy)*kappa/dy);  // coefficient for T(i-1,j)
                     gsl_matrix_set (mat, k, k, (2*kappa/dy)*kappa/dy + (2*kappa/dy)*kappa/dy + 1/dt); // T(i,j)
+                    
                     // Internal nodes, vector b
                     gsl_vector_set (b, k, gsl_matrix_get(To, i, j)/dt);
+                    
                     // Add advective terms -vx*dT/dx
                     if (gsl_matrix_get (vx, i, j) > 0) {
                         gsl_vector_set(b, k, (gsl_vector_get (b, k) - gsl_matrix_get (vx, i, j)*(gsl_matrix_get(To, i, j)-
                         gsl_matrix_get(To, i, j-1))/dx));
                     }
+                    
                     else {
                         gsl_vector_set(b, k, (gsl_vector_get (b, k) - gsl_matrix_get (vx, i, j)*(gsl_matrix_get(To, i, j+1)-
                         gsl_matrix_get(To, i, j))/dx));
                     }
+                    
                     // -vy*dT/dy
                     if (gsl_matrix_get (vy, i, j) > 0) {
                         gsl_vector_set(b, k, (gsl_vector_get (b, k) - gsl_matrix_get (vy, i, j)*(gsl_matrix_get(To, i, j)-
                         gsl_matrix_get(To, i-1, j))/dy));
                     }
+                    
                     else {
                         gsl_vector_set(b, k, (gsl_vector_get (b, k) - gsl_matrix_get (vy, i, j)*(gsl_matrix_get(To, i+1, j)-
                         gsl_matrix_get(To, i, j))/dy));
@@ -128,6 +144,7 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
                 }
             }
         }
+        
         // Solve system of equations Ax = b for where x is the temperature at nodes
         gsl_vector *x = gsl_vector_alloc (ny*nx);
         gsl_permutation* p = gsl_permutation_alloc (ny*nx);
@@ -177,10 +194,13 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
     int tnum = round(total_time/dt); // number of time steps
 
     for (int t = 1; t <= tnum; t++) {
+        
         // Allocate  matrix A in Ax = b
         gsl_matrix* mat = gsl_matrix_alloc (ny*nx, ny*nx);
+        
         // Allocate  right side of vector , b
         gsl_vector* b   = gsl_vector_calloc (ny*nx);
+        
        /*
         Explicit solving of 2D temperature equation:
         dT/dt=kappa*(d2T/dx2+d2T/dy2)
@@ -188,8 +208,10 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
         */
         for (int i = 1; i < ny - 1 ; i++) {
             for (int j = 1; j < nx - 1 ; j++) {
+                
                 // Compute advective terms
                 double vxdtdx, vydtdx;
+                
                 if (gsl_matrix_get (vx, i, j) > 0) {
                     vxdtdx = gsl_matrix_get (vx, i, j)*(gsl_matrix_get(Toexp, i, j)- gsl_matrix_get(Toexp, i, j-1))/dx;
                 }
@@ -215,9 +237,11 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
         gsl_vector* T_row = gsl_vector_calloc(nx);
         gsl_vector* T_col = gsl_vector_calloc(ny);
         switch (top_condition) {
+            
             case 0: // Insulating
             // Upper boundary
                 gsl_matrix_set_row(T1exp, 0, T_row);
+            
             case 1: // Constant
                 gsl_vector* top = gsl_vector_alloc(nx);
                 gsl_vector_set_all(top, top_temp);
@@ -225,8 +249,10 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
                 gsl_vector_free (top);
             }
         switch (bottom_condition) {
+            
             case 0: // Bottom boundary
                 gsl_matrix_set_row(T1exp, ny-1, T_row);
+            
             case 1: 
                 gsl_vector* bottom = gsl_vector_alloc(nx);
                 gsl_vector_set_all(bottom, bottom_temp);
@@ -234,8 +260,10 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
                 gsl_vector_free (bottom);
             }
         switch (left_condition) {
+            
             case 0: // Left Boundary
                 gsl_matrix_set_col(T1exp, 0, T_col);
+            
             case 1:
                 gsl_vector* left = gsl_vector_alloc(ny);
                 gsl_vector_set_all(left, left_temp);
@@ -243,8 +271,10 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
                 gsl_vector_free (left);
             }
         switch (right_condition) {
+            
             case 0: // Right Boundary
                 gsl_matrix_set_col(T1exp, nx-1, T_col);
+            
             case 1: // Constant
                 gsl_vector* right = gsl_vector_alloc(ny);
                 gsl_vector_set_all(right, right_temp);
@@ -262,6 +292,7 @@ void explicit_T1 (gsl_matrix* Toexp, gsl_matrix* T1exp, double dx, double dy, gs
         if (t % f == 0 || t == 1) {    
             write_vts(output_path, X, Y, t, nx, ny, T1exp, vx, vy);
         }
+        
         // copy values of old time step into new
         int gsl_matrix_memcpy (gsl_matrix * Toexp, gsl_matrix * T1exp);
     }
