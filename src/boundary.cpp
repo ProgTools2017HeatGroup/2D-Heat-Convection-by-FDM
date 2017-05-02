@@ -1,15 +1,21 @@
-// boundary.cpp
-/* Set boundary values of u,v,and p
-according to the boundary conditions.*/
-/*The BC flags are as follows:
-* 1: Free-slip condition (Roller)
-* 2: No-slip condition (Pin)
-*/
+/**
+ * @Short boundary condition program
+ * @File  boundary.cpp
+ *
+ * Set boundary values of u,v,and p
+ * According to the boundary conditions.
+ * The BC flags are as follows:
+ * 1: Free-slip condition (Roller)
+ * 2: No-slip condition (Pin)
+ *
+ */
+
 #define BC_FREE_SLIP 1
 #define BC_NO_SLIP 2
 #include <iostream>
 #include <fstream>
 #include <vector>
+
 using namespace std;
 
 void set_boundary_conditions(int w_left, int w_right, int w_top, int w_bottom, double P, vector<vector<float> > U , vector<vector<float> > V, int nx, int ny) {

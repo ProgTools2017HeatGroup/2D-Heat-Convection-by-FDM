@@ -1,3 +1,12 @@
+/**
+ * @Short density applying program
+ * @File  set_density.cpp
+ *
+ * Function apply density to each mesh grid.
+ *
+ */
+
+
 #include <gsl/gsl_matrix.h>
 #include <iostream>
 #include "structs.h"

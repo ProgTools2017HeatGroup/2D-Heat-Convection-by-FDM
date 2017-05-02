@@ -1,3 +1,12 @@
+/**
+ * @Header for  set density to mesh grids
+ * @File set_density.h
+ *
+ * This file contains the prototypes of all functions used for applying density
+ *
+ */
+
+
 #ifndef DENSITY_H
 #define DENSITY_H
 

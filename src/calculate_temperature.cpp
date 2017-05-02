@@ -1,3 +1,13 @@
+/**
+ * @Function for temperature calculation based on input
+ * @File calculate_temperature.cpp
+ * 
+ * Soving for dT/dt+vx*dT/dx+vy*dT/dy=kappa*(d2T/dx2+d2T/dy2) for each mesh grid
+ * Process all grid points for Implicit Solving at each time step
+ * 
+ */
+
+
 #include <iostream>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_linalg.h>
@@ -88,7 +98,7 @@ void implicit_T1 (gsl_matrix* To, gsl_matrix* T1, double dx, double dy, gsl_matr
                             }
                         }
                     
-                   //risht condition
+                   //right condition
                     else if (j == nx - 1 && i > 0 && i < ny - 1) {
                         switch (right_condition) {
                             case 0:

@@ -1,8 +1,16 @@
-// Function output data set into standard .vts file for visualisation via ParaView.
-
-// Acknowledgement:
-// This file was generated with the help about file layout for .vts file, from Dr. Eunseo Choi, CERI, The University of Memphis, 
-// together with the coding guidence from Yu Geng, CERI, The University of Memphis
+/**
+ * @Function for writing output data into .vts file
+ * @file    generate_output_in_vts.cpp
+ *
+ * This program write output data from previous calculation into .vts file to be visualze by ParaView.
+ * The output frequency is defined by user via input file. The program is adjustable with different 
+ * domain dimension.
+ *
+ * Acknowledgement:
+ * This file was generated with the help about file layout for .vts file, from Dr. Eunseo Choi, CERI, The University of Memphis,
+ * together with the coding guidence from Yu Geng, CERI, The University of Memphis.
+ *
+ */
 
 #include <string>
 #include <sstream>

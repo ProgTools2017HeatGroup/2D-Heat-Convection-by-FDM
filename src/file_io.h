@@ -1,11 +1,11 @@
 /**
-* @short   Input and output Headers
-* @file    file_io.h
-* @author  Jia Zhang
-*
-* This file contains the prototypes all functions used for reading in and printing out.
-*
-*/
+ * @short   Input and output Headers
+ * @file    file_io.h
+ * @author  Jia Zhang
+ *
+ * This file contains the prototypes all functions used for reading in and printing out.
+ *
+ */
 
 #ifndef FILE_IO_H_
 #define FILE_IO_H_

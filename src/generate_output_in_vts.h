@@ -1,6 +1,13 @@
+/**
+ * @Header for output generation function
+ * @File  generate_output_in_vts.h
+ *
+ * This file contains the prototype of function used for generating the .vts file
+ *
+ */
+
 #ifndef OUTPUT_VTS
 #define OUTPUT_VTS
-
 #include <string>
 #include <sstream>
 #include <fstream>

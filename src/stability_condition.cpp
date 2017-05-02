@@ -1,17 +1,14 @@
-/*
- * Calculates stable time step based on the user inputs
- * February, 2017
+/**
+ * @Short stability determaination program
+ * @File  stability_condition.cpp
+ *
+ * This function defines the stable time step for itration based on user input
  *
  */
 
 #include <iostream>
 #include <math.h>
 #include "stability_condition.h"
-
-/**
- * @short stability condition calculated function
- * @file  stability_condition.cpp
- */
 
 using namespace std;
 

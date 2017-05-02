@@ -1,3 +1,15 @@
+/**
+ * @Short initial temperature calculation program
+ * @File  initial_temp.cpp
+ *
+ * Define various perturbations - box, disk, gaussian to start convection
+ * Coord_x and coord_y define the center of the perturbation in terms of cartesian
+ * Perturb represents the temperature of the perturbation and other
+ * Variables corresponds to their geometries.
+ *
+ */
+
+
 #include <math.h>
 #include <cassert>
 #include <string>
@@ -6,6 +18,7 @@
 #include "structs.h"
 
 #define PI 3.14159265
+
 
 // set the background value to a constant background temperature
 void set_back_value (gsl_matrix* field_in, int ny_in, int nx_in, double back) {
@@ -18,11 +31,6 @@ void set_back_value (gsl_matrix* field_in, int ny_in, int nx_in, double back) {
 
 }
 
-/* Define various perturbations - box, disk, gaussian to start convection
-* coord_x and coord_y define the center of the perturbation in terms of cartesian
-* perturb represents the temperature of the perturbation and other
-* variables corresponds to their geometries.
-*/
 void set_box (gsl_matrix* field_in, double dx, double dy, Parameters *params) {
 
     double length = params->length;

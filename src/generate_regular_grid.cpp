@@ -1,17 +1,14 @@
-/*
- * Generates regular rectangular grid points based on the user inputs
- * March, 2017
+/**
+ * @Function generates regular rectangular grid points based on the user inputs
+ * @File generate_regular_grid.cpp
+ *
+ * Based on user input, function generate mesh grid of the domain.
  *
  */
 
 #include <iostream>
 #include <cstdlib>
 #include "generate_regular_grid.h"
-
-/**
- * @short generate regular grid function
- * @file  generate_regular_grid.cpp
- */
 
 using namespace std;
 

@@ -1,3 +1,12 @@
+/**
+ * @Header for temperature calculation based on input
+ * @File calculate_temperature.h
+ *
+ * This file contains the prototypes of all functions used for temperature calculation.
+ *
+ */
+
+
 #ifndef CALCULATE_TEMPERATURE
 #define CALCULATE_TEMPERATURE
 

@@ -1,3 +1,12 @@
+/**
+ * @Header for stable time step calculation based on input
+ * @File stability_condition.h
+ *
+ * This file contains the prototypes of all functions used for stable time step based on user input
+ *
+ */
+
+
 #ifndef STABILITY_CONDITION_H
 #define STABILITY_CONDITION_H
 

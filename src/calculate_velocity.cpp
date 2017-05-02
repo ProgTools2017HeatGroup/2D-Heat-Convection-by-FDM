@@ -1,3 +1,12 @@
+/**
+ * @Function for velocity calculation based on input
+ * @File calculate_velocity.cpp
+ *
+ * Solving Poisson equation for vorticity  d2OMEGA/dx2+d2OMEGA/dy2=gy*dRHO/dx
+ * Solving Poisson equation for stream function d2PSI/dx2+d2PSI/dy2=OMEGA
+ *
+ */
+
 #include <iostream>
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_linalg.h>

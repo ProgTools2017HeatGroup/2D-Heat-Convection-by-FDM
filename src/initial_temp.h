@@ -1,3 +1,12 @@
+/**
+ * @Header for initial_temp
+ * @File initial_temp.h
+ *
+ * This file contains the prototypes of all functions apply the initial temperature field to domain
+ *
+ */
+
+
 #ifndef INITIAL_TEMP_H
 #define INITIAL_TEMP_H
 

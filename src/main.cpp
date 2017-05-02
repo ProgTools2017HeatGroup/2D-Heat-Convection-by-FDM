@@ -4,6 +4,21 @@
  * This is the documentation for 2D Heat Convection Simulation Package.
  * It contains all the relevant info.
  */
+
+/**
+ * @short Main program
+ * @file  main.cpp
+ * @author Arushi Saxena, Hao Lu, Jia Zhang
+ * @return 0 on success
+ *
+ * This program solves for the 2-D fluid convection in a Box due to an initial temperature perturbation
+ * using finite difference method over a regular grid. For simplicity, the fluid is assumed is assumed
+ * incompressible, Newtonian and slowly convecting. Our code itself has no internal knowledge of units.
+ * The purpose of this program is to simulate the fluid convection under different initial conditions,
+ * boundary conditions and initial temperature perturbations.
+ */
+
+
 #include <iostream>
 #include <fstream>
 #include <time.h>
@@ -23,18 +38,6 @@
 #include "generate_output_in_vts.h"
 
 using namespace std;
-/**
- * @short Main program
- * @file  main.cpp
- * @author Arushi Saxena, Hao Lu, Jia Zhang
- * @return 0 on success
- *
- * This program solves for the 2-D fluid convection in a Box due to an initial temperature perturbation 
- * using finite difference method over a regular grid. For simplicity, the fluid is assumed is assumed 
- * incompressible, Newtonian and slowly convecting. Our code itself has no internal knowledge of units. 
- * The purpose of this program is to simulate the fluid convection under different initial conditions, 
- * boundary conditions and initial temperature perturbations.
- */
 
 int main(int argc, char* argv[]) {
     

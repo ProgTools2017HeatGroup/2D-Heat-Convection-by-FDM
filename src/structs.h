@@ -1,3 +1,12 @@
+/**
+ * @Header for definition of structs used in function.
+ * @File structs.h
+ *
+ * This file defines the structs for parameters used in functions
+ *
+ */
+
+
 #ifndef STRUCTS_H_
 #define STRUCTS_H_
 

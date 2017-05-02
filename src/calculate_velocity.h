@@ -1,3 +1,11 @@
+/**
+ * @Short velocity calculation Header
+ * @File calculate_velocity.h
+ *
+ * This file contains the prototype of velocity calculation in the domain
+ *
+ */
+
 #ifndef CALCULATE_VELOCITY_H
 #define CALCULATE_VELOCITY_H
 
