@@ -18,7 +18,9 @@
 
 using namespace std;
 
-void set_boundary_conditions(int w_left, int w_right, int w_top, int w_bottom, double P, vector<vector<float> > U , vector<vector<float> > V, int nx, int ny) {
+void set_boundary_conditions(int w_left, int w_right, int w_top, int w_bottom,
+                             double P, vector<vector<float> > U , vector<vector<float> > V,
+                             int nx, int ny) {
     int i,j;
 
     /* vertical boundaries (left and right) */
